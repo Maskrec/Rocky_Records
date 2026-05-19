@@ -15,7 +15,10 @@
         </nav>
         
         <div class="user-controls">
-            <input type="text" placeholder="Buscar álbum, artista...">
+            <form action="buscar.php" method="GET" style="display: flex; align-items: center; margin: 0;">
+                <input type="text" name="q" placeholder="Buscar álbum, artista..." required>
+                <button type="submit" style="display: none;"></button>
+            </form>
             
             <div class="icons">
                 <a href="cuenta.php" class="btn-icon">Mi cuenta</a>

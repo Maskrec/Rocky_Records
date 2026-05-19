@@ -8,9 +8,7 @@
     <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
-    <header class="main-header">
-       <?php include 'header.php'; ?>
-    </header>
+    <?php include 'header.php'; ?>
     <section class="hero">
        
         <div class="hero-img">
@@ -26,7 +24,7 @@
 
     <main class="catalogo">
         <?php
-        $stmt = $pdo->query("SELECT * FROM productos ORDER BY Fecha_Publicacion DESC");
+        $stmt = $pdo->query("SELECT * FROM productos ORDER BY Fecha_agregado DESC");
         while ($row = $stmt->fetch()) {
             $precio_final = $row['precio_oferta'] ? $row['precio_oferta'] : $row['precio'];
         ?>
@@ -42,10 +40,20 @@
                 </div>
 
                 <p class="precio">$<?php echo $precio_final; ?> MXN</p>
-                <button class="btn-agregar">agregar al carrito</button>
+                <form action="agregar_carrito.php" method="POST" style="margin:0;">
+                    <?php 
+                    $id_val = isset($row['id']) ? $row['id'] : (isset($row['ID']) ? $row['ID'] : (isset($row['id_producto']) ? $row['id_producto'] : ''));
+                    ?>
+                    <input type="hidden" name="id_producto" value="<?php echo $id_val; ?>">
+                    <input type="hidden" name="cantidad" value="1">
+                    <button type="submit" class="btn-agregar">agregar al carrito</button>
+                </form>
             </div>
         <?php } ?>
     </main>
+</body>
+<?php include 'footer.php'; ?>
+</html>n>
 </body>
 <?php include 'footer.php'; ?>
 </html>
