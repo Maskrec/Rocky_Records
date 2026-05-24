@@ -1,0 +1,74 @@
+/* Estilos base para la página de géneros */
+.generos-container {
+    background-color: #1a1a1a; /* Fondo oscuro mate como el de tu diseño */
+    padding: 60px 40px;
+    min-height: 100vh;
+}
+
+.main-title {
+    color: #f4ebd9; /* Texto beige claro */
+    font-size: 2.5rem;
+    font-family: 'Arial Black', sans-serif;
+    margin-bottom: 40px;
+    letter-spacing: 2px;
+}
+
+/* Configuración de la cuadrícula (3 columnas) */
+.generos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columnas iguales */
+    gap: 25px;
+}
+
+/* Diseño de cada tarjeta */
+.genero-card {
+    background-size: cover;
+    background-position: center;
+    height: 160px; /* Altura ideal para el formato rectangular de tu diseño */
+    border-radius: 8px; /* Bordes ligeramente suavizados */
+    display: flex;
+    align-items: flex-end; /* Empuja el contenido hacia abajo */
+    padding: 20px;
+    transition: transform 0.3s ease;
+}
+
+.genero-card:hover {
+    transform: scale(1.02); /* Efecto sutil al pasar el mouse */
+}
+
+/* Textos dentro de la tarjeta */
+.genero-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Todo alineado a la izquierda */
+}
+
+.genero-content h2 {
+    color: #ffffff;
+    font-size: 1.8rem;
+    margin: 0 0 10px 0;
+    font-family: 'Arial Black', sans-serif;
+}
+
+.btn-ver-todos {
+    color: #e07a5f; /* Tu naranja característico del diseño */
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-ver-todos:hover {
+    color: #f4ebd9;
+}
+
+/* Responsivo: Si la pantalla es pequeña (celular), cambia a 1 columna */
+@media (max-width: 768px) {
+    .generos-grid {
+        grid-template-columns: 1fr;
+    }
+}
