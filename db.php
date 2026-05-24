@@ -1,6 +1,9 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 $host = 'localhost';
-$db   = 'rockyrecords_db';
+$db   = 'rocky';
 $user = 'root';
 $pass = ''; 
 $charset = 'utf8mb4';
