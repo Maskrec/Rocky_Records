@@ -1,0 +1,37 @@
+.main-container {
+    display: flex; /* Pone los filtros a la izquierda y los productos a la derecha */
+    gap: 30px;
+    padding: 40px;
+    background-color: #f4ebd9; /* El color beige del fondo */
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* Hace la cuadrícula responsiva */
+    gap: 20px;
+    width: 100%;
+}
+:root {
+    --bg-crema: #f4eade;
+    --naranja-rocky: #e65100;
+    --texto-oscuro: #1a1a1a; /* Corregido el doble guion */
+    --papel-claro: #fffaf0;
+}
+
+body {
+    background-color: var(--bg-crema);
+    background-image: url('textura-papel.jpg'); 
+    background-attachment: fixed;
+    color: var(--texto-oscuro);
+    margin: 0;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+.main-header {
+    background-color: #000;
+    color: #fff;
+    padding: 15px 5%;
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+}
