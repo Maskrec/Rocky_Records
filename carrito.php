@@ -9,13 +9,14 @@
 <body>
     <?php include 'header.php'; ?>
 
-    <main class="carrito-container">
+    <main class="contenedor-carrito">
         <h1>Mi Carrito</h1>
         
         <div style="overflow-x:auto;">
         <?php
         try {
             $session_id = session_id();
+            // Obtener productos del carrito para la sesión actual
             $stmt = $pdo->prepare("
                 SELECT c.id as carrito_id, p.imagen_url, p.titulo, p.artista, p.formato, p.precio, p.precio_oferta, c.cantidad 
                 FROM carrito c 
@@ -26,7 +27,7 @@
             $productos = $stmt->fetchAll();
             
             if (count($productos) > 0) {
-                echo '<table class="data-table">';
+                echo '<table class="tabla-datos">';
                 echo '<tr>';
                 echo '<th>Imagen</th>';
                 echo '<th>Producto</th>';
@@ -59,11 +60,11 @@
                 echo '</table>';
                 
                 echo '<div style="text-align: right; margin-top: 20px;">';
-                echo '<button class="btn-explorar" style="background-color: #e50914; color: white; padding: 10px 20px; border: none; cursor: pointer;">Proceder al Pago</button>';
+                echo '<button class="boton-explorar" style="background-color: #e50914; color: white; padding: 10px 20px; border: none; cursor: pointer;">Proceder al Pago</button>';
                 echo '</div>';
             } else {
                 echo '<p>Tu carrito está vacío.</p>';
-                echo '<a href="index.php" class="btn-explorar">Explorar catálogo</a>';
+                echo '<a href="index.php" class="boton-explorar">Explorar catálogo</a>';
             }
         } catch (Exception $e) {
             echo '<p>Error al cargar el carrito: ' . $e->getMessage() . '</p>';
