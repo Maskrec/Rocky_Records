@@ -3,7 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 $host = 'localhost';
-$db   = 'rocky';
+$db   = 'rocky records';
 $user = 'root';
 $pass = ''; 
 $charset = 'utf8mb4';
