@@ -4,13 +4,7 @@
         <div class="columna-pie">
             <a href="index.php" class="enlace-logo">
                 <div class="logo-vinilo">
-                    <svg viewBox="0 0 100 100">
-                        <circle cx="50" cy="50" r="48" fill="#151311" />
-                        <circle cx="50" cy="50" r="40" fill="none" stroke="#2a2522" stroke-width="1.5" />
-                        <circle cx="50" cy="50" r="32" fill="none" stroke="#2a2522" stroke-width="1.5" />
-                        <circle cx="50" cy="50" r="16" fill="#C2410C" />
-                        <circle cx="50" cy="50" r="5" fill="#e6dfd5" />
-                    </svg>
+                    <img src="img/svg/logo-vinilo.svg" alt="Logo Rocky Records" class="logo-vinilo-img">
                 </div>
                 <div class="texto-logo">
                     <span class="titulo-logo">Rocky</span>

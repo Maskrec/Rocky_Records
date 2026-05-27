@@ -16,7 +16,7 @@
         <?php
         try {
             $session_id = session_id();
-            // Obtener productos del carrito para la sesión actual
+            
             $stmt = $pdo->prepare("
                 SELECT c.id as carrito_id, p.imagen_url, p.titulo, p.artista, p.formato, p.precio, p.precio_oferta, c.cantidad 
                 FROM carrito c 

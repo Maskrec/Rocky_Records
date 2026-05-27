@@ -24,11 +24,7 @@
                 <img src="img/tocadiscos.png" alt="Tocadiscos retro tocando un vinilo" class="imagen-hero">
                 <!-- Insignia Flotante -->
                 <div class="insignia-envio">
-                    <svg class="icono-vinilo-insignia" viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
-                        <circle cx="12" cy="12" r="6" fill="none" stroke="currentColor" stroke-width="1.5"/>
-                        <circle cx="12" cy="12" r="3" fill="currentColor"/>
-                    </svg>
+                    <img src="img/svg/insignia-envio.svg" alt="Vinilo" class="icono-vinilo-insignia">
                     <span>Envíos a<br>todo el país</span>
                 </div>
             </div>
@@ -39,10 +35,7 @@
     <section class="barra-caracteristicas">
         <div class="contenedor-caracteristicas">
             <div class="elemento-caracteristica">
-                <svg class="icono-caracteristica" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <circle cx="12" cy="12" r="3"></circle>
-                </svg>
+                <img src="img/svg/caracteristica-vinilo.svg" alt="Vinilo" class="icono-caracteristica">
                 <div class="texto-caracteristica">
                     <span class="titulo-caracteristica">EDICIONES EXCLUSIVAS</span>
                     <span class="subtitulo-caracteristica">Viniles de colección</span>
@@ -50,11 +43,7 @@
             </div>
             
             <div class="elemento-caracteristica">
-                <svg class="icono-caracteristica" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="21 16 12 21 3 16 3 8 12 3 21 8 21 16"></polyline>
-                    <polyline points="3 8 12 13 21 8"></polyline>
-                    <line x1="12" y1="13" x2="12" y2="21"></line>
-                </svg>
+                <img src="img/svg/caracteristica-caja.svg" alt="Caja" class="icono-caracteristica">
                 <div class="texto-caracteristica">
                     <span class="titulo-caracteristica">EMPAQUE SEGURO</span>
                     <span class="subtitulo-caracteristica">Cuidamos tu música</span>
@@ -66,10 +55,7 @@
                     <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
                     <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
                 </svg>
-                <div class="texto-caracteristica">
-                    <span class="titulo-caracteristica">ATENCIÓN PERSONALIZADA</span>
-                    <span class="subtitulo-caracteristica">Estamos para ayudarte</span>
-                </div>
+                <img src="img/svg/caracteristica-auriculares.svg" alt="Auriculares" class="icono-caracteristica">
             </div>
             
             <div class="elemento-caracteristica">
@@ -80,9 +66,7 @@
                     <span class="titulo-caracteristica">PAGOS SEGUROS</span>
                     <span class="subtitulo-caracteristica">Múltiples métodos</span>
                 </div>
-            </div>
-            
-            <div class="elemento-caracteristica">
+            </divimg src="img/svg/caracteristica-escudo.svg" alt="Escudo" class="icono-caracteristica"s="elemento-caracteristica">
                 <svg class="icono-caracteristica" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M9 18V5l12-2v13"></path>
                     <circle cx="6" cy="18" r="3"></circle>
@@ -92,11 +76,7 @@
                     <span class="titulo-caracteristica">APOYA A LOS ARTISTAS</span>
                     <span class="subtitulo-caracteristica">Compra original</span>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contenedor Principal del Catálogo -->
+            </divimg src="img/svg/caracteristica-musica.svg" alt="Música" class="icono-caracteristica"rincipal del Catálogo -->
     <main class="contenedor-seccion" id="catalogo">
         <!-- Sección de Nuevos Lanzamientos -->
         <section style="margin-bottom: 50px;">
@@ -155,11 +135,7 @@
                                 <input type="hidden" name="id_producto" value="<?php echo $row['id']; ?>">
                                 <input type="hidden" name="cantidad" value="1">
                                 <button type="submit" class="boton-agregar-carrito" title="Agregar al carrito">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <circle cx="9" cy="21" r="1"></circle>
-                                        <circle cx="20" cy="21" r="1"></circle>
-                                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-                                    </svg>
+                                    <img src="img/svg/icono-carrito.svg" alt="Carrito" class="icono-carrito-btn">
                                 </button>
                             </form>
                         </div>
