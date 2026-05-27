@@ -12,7 +12,7 @@
         <input type="text" name="artista" placeholder="Nombre del artista" required><br>
 
         <select name="formato">
-            <option value="Vinilo">Vinilo</option>
+            <option value="Vinil">Vinilo</option>
             <option value="CD">CD</option>
         </select><br>
 

@@ -1,13 +1,13 @@
-.generos-container {
+.colecciones-container {
     background-color: #f4ebd9 !important; 
     padding: 60px 40px !important;
-    min-height: 100vh !important;
+    min-height: 80vh !important;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
     box-sizing: border-box !important;
     display: block !important;
 }
 
-.generos-container .main-title {
+.main-title {
     text-align: center !important;
     font-size: 2.5rem !important;
     color: #111111 !important;
@@ -17,7 +17,7 @@
     text-transform: uppercase !important;
 }
 
-.generos-container .generos-grid {
+.colecciones-grid {
     display: grid !important;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
     gap: 30px !important;
@@ -25,7 +25,7 @@
     margin: 0 auto !important;
 }
 
-.generos-container .genero-card {
+.coleccion-card {
     background-color: #ffffff !important;
     border-radius: 8px !important;
     overflow: hidden !important;
@@ -37,38 +37,32 @@
     flex-direction: column !important;
 }
 
-.generos-container .genero-card:hover {
+.coleccion-card:hover {
     transform: translateY(-5px) !important;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
 }
 
-.generos-container .genero-img-wrapper {
+.coleccion-img-wrapper {
     width: 100% !important;
     aspect-ratio: 16 / 10 !important;
     overflow: hidden !important;
     background-color: #222 !important;
 }
 
-/* Protegido: Esta regla solo aplica a las imágenes de TUS tarjetas */
-.generos-container .genero-img-wrapper img {
+.coleccion-img-wrapper img {
     width: 100% !important;
     height: 100% !important;
     object-fit: cover !important;
-    transition: transform 0.5s ease !important;
 }
 
-.generos-container .genero-card:hover .genero-img-wrapper img {
-    transform: scale(1.05) !important;
-}
-
-.generos-container .genero-info {
+.coleccion-info {
     padding: 20px !important;
     display: flex !important;
     flex-direction: column !important;
     flex-grow: 1 !important;
 }
 
-.generos-container .genero-info h2 {
+.coleccion-info h2 {
     margin: 0 0 10px 0 !important;
     font-size: 1.4rem !important;
     color: #111111 !important;
@@ -76,28 +70,17 @@
     text-transform: uppercase !important;
 }
 
-.generos-container .genero-info p {
+.coleccion-info p {
     margin: 0 !important;
     font-size: 0.95rem !important;
     color: #555555 !important;
     line-height: 1.5 !important;
 }
 
-.generos-container .error-msg {
-    color: #e74c3c !important;
-    text-align: center !important;
-    grid-column: 1 / -1 !important;
-    font-weight: bold !important;
-}
-footer img, 
-.main-footer img, 
-footer picture img, 
-[class*="footer"] img,
-footer .logo,
-footer [class*="logo"] {
-    max-width: 160px !important;
-    width: 160px !important;
+footer img, .main-footer img, [class*="footer"] img {
+    max-width: 180px !important;
+    width: 180px !important;
     height: auto !important;
-    display: block !important;
+    display: inline-block !important;
     margin: 15px auto !important;
 }

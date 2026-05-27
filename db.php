@@ -1,9 +1,12 @@
 <?php
+// Iniciar la sesión si aún no está activa
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
+// Configuración de la conexión a la base de datos MySQL
 $host = 'localhost';
-$db   = 'rocky records';
+$db   = 'rocky records'; 
 $user = 'root';
 $pass = ''; 
 $charset = 'utf8mb4';
@@ -18,6 +21,6 @@ $options = [
 try {
      $pdo = new PDO($dsn, $user, $pass, $options);
 } catch (\PDOException $e) {
-   //  throw new \PDOException($e->getMessage(), (int)$e->getCode());
+     throw new \PDOException($e->getMessage(), (int)$e->getCode());
 }
 ?>
