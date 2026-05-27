@@ -4,24 +4,20 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Conexión PDO local idéntica a la que ya funcionó
-$host = 'localhost';
-$db   = 'Rocky_Records'; 
-$user = 'root';
-$pass = ''; 
-$charset = 'utf8mb4';
+// Incluimos db.php que contiene la conexión segura PDO en $pdo
+if (file_exists('db.php')) {
+    include 'db.php';
+} elseif (file_exists('../db.php')) {
+    include '../db.php';
+} else {
+    die("Error crítico: No se encontró el archivo db.php en el proyecto.");
+}
 
-try {
-    $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-    $options = [
-        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-        PDO::ATTR_EMULATE_PREPARES   => false,
-    ];
-    $pdo = new PDO($dsn, $user, $pass, $options);
-} catch (PDOException $e) {
-    // Silenciamos el mensaje tosco para que no rompa visualmente el diseño
-    $error_conexion = $e->getMessage();
+// Verificamos si la variable $pdo existe tras el include, si no, intentamos rescatarla
+if (!isset($pdo)) {
+    if (isset($conn)) { $pdo = $conn; }
+    elseif (isset($conexion)) { $pdo = $conexion; }
+    elseif (isset($db_connect)) { $pdo = $db_connect; }
 }
 
 // Consulta de Colecciones
@@ -41,7 +37,7 @@ if (isset($pdo)) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Groove Records - Colecciones Especiales</title>
+    <title>Colecciones Especiales - Rocky Records</title>
     
     <link rel="stylesheet" href="css/estilos.css">
     <link rel="stylesheet" href="css/colecciones.css">
@@ -101,69 +97,6 @@ if (isset($pdo)) {
     <?php 
     if (file_exists('footer.php')) { include 'footer.php'; } 
     ?>
-
-</body>
-</html>
-<?php
-// Arreglo dinámico con los datos de las colecciones (idéntico a tu diseño)
-// Cada colección tiene un color de fondo único en formato Hexadecimal (bg_color)
-$colecciones = [
-    [
-        'titulo' => 'CLÁSICOS ESENCIALES',
-        'descripcion' => 'Discos icónicos que no pueden faltar en tu colección física. Desde los Beatles hasta Pink Floyd, la verdadera historia de la música.',
-        'imagen' => 'img/colecciones/clasicos.png',
-        'bg_color' => '#5c2c16' // Marrón / Terracota
-    ],
-    [
-        'titulo' => 'INDIE MODERNO',
-        'descripcion' => 'Descubre los sonidos alternativos que están definiendo a nuestra generación actual. Bandas independientes, ediciones raras y joyas ocultas.',
-        'imagen' => 'img/colecciones/indie.png',
-        'bg_color' => '#2b3a2a' // Verde Oliva / Oscuro
-    ],
-    [
-        'titulo' => 'EDICIONES LIMITADAS',
-        'descripcion' => 'Joyas de colección con discos de colores, portadas alternativas y material exclusivo que solo unos pocos tendrán la suerte de poseer.',
-        'imagen' => 'img/colecciones/limitadas.png',
-        'bg_color' => '#8e712a' // Ocre / Mostaza vintage
-    ]
-];
-?>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Colecciones - Rocky Records</title>
-    <link rel="stylesheet" href="css/estilos.css">
-    <link rel="stylesheet" href="colecciones.css">
-</head>
-<body>
-
-    <?php include 'header.php'; ?>
-
-    <main class="colecciones-container">
-        <h1 class="main-title">COLECCIONES</h1>
-
-        <section class="colecciones-list">
-            <?php 
-            // Aplicamos nuestro truco del foreach para recorrer las colecciones
-            foreach ($colecciones as $coleccion): 
-            ?>
-                <div class="coleccion-row" style="background-color: <?php echo $coleccion['bg_color']; ?>;">
-                    
-                    <div class="coleccion-info">
-                        <h2><?php echo $coleccion['titulo']; ?></h2>
-                        <p><?php echo $coleccion['descripcion']; ?></p>
-                    </div>
-
-                    <div class="coleccion-media">
-                        <img src="<?php echo $coleccion['imagen']; ?>" alt="<?php echo $coleccion['titulo']; ?>">
-                    </div>
-
-                </div>
-            <?php endforeach; ?>
-        </section>
-    </main>
 
 </body>
 </html>
