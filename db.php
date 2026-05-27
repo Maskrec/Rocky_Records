@@ -1,14 +1,9 @@
 <?php
-// Iniciar la sesión si aún no está activa
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-// Configuración de la conexión a la base de datos MySQL
+// Configuración de los parámetros locales de XAMPP
 $host = 'localhost';
-$db   = 'rocky records'; 
-$user = 'root';
-$pass = ''; 
+$db   = 'rocky_records'; // El nombre exacto que ya corregimos
+$user = 'root';          // El usuario por defecto en XAMPP es root
+$pass = '';              // Por defecto en XAMPP viene vacío
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
@@ -19,8 +14,13 @@ $options = [
 ];
 
 try {
+     // 1. Creamos la conexión en $pdo (la que pide generos.php y viniles.php)
      $pdo = new PDO($dsn, $user, $pass, $options);
+     
+     // 2. Creamos un clon en $conexion (por si tus compañeros usan MySQLi en otras páginas)
+     $conexion = $pdo; 
+     
 } catch (\PDOException $e) {
-     throw new \PDOException($e->getMessage(), (int)$e->getCode());
+     die("Error de conexión: " . $e->getMessage());
 }
 ?>
