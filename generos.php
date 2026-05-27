@@ -36,9 +36,9 @@ if (isset($pdo) && $pdo !== null) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rocky Records-Géneros Musicales</title>
+    <title>Géneros Musicales - Rocky Records</title>
+    <link rel="stylesheet" href="css/estilos.css">
     <link rel="stylesheet" href="generos.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 

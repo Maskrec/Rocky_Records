@@ -37,14 +37,17 @@ if (isset($pdo)) {
         </a>
         
        
+        <?php
+        $current_page = basename($_SERVER['PHP_SELF']);
+        ?>
         <nav class="navegacion-principal">
-            <a href="index.php" class="enlace-navegacion activo">INICIO</a>
-            <a href="viniles.php" class="enlace-navegacion">VINILES</a>
-            <a href="cds.php" class="enlace-navegacion">CD'S</a>
+            <a href="index.php" class="enlace-navegacion <?php echo ($current_page == 'index.php') ? 'activo' : ''; ?>">INICIO</a>
+            <a href="viniles.php" class="enlace-navegacion <?php echo ($current_page == 'viniles.php') ? 'activo' : ''; ?>">VINILES</a>
+            <a href="cds.php" class="enlace-navegacion <?php echo ($current_page == 'cds.php') ? 'activo' : ''; ?>">CD'S</a>
             <a href="index.php#nuevos-lanzamientos" class="enlace-navegacion">NUEVOS LANZAMIENTOS</a>
-            <a href="index.php#generos" class="enlace-navegacion">GÉNEROS</a>
+            <a href="generos.php" class="enlace-navegacion <?php echo ($current_page == 'generos.php') ? 'activo' : ''; ?>">GÉNEROS</a>
             <a href="index.php#ofertas" class="enlace-navegacion">OFERTAS</a>
-            <a href="index.php#colecciones" class="enlace-navegacion">COLECCIONES</a>
+            <a href="colecciones.php" class="enlace-navegacion <?php echo ($current_page == 'colecciones.php') ? 'activo' : ''; ?>">COLECCIONES</a>
         </nav>
         
        
@@ -58,18 +61,21 @@ if (isset($pdo)) {
             </form>
             
             <div class="enlaces-accion-cabecera">
+                <!-- Mi Cuenta -->
+                <a href="cuenta.php" class="elemento-accion <?php echo ($current_page == 'cuenta.php') ? 'activo' : ''; ?>">
+                    <img src="img/svg/icono-usuario.svg" alt="Usuario" class="icono-accion">
+                    <span class="etiqueta-accion">MI CUENTA</span>
+                </a>
                 
-                <a href="cuenta.php" class="elemento-accion">
-                    <svg class="icono-accion" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                    <img src="img/svg/icono-usuario.svg" alt="Usuario" class="icono-accion"
-                <a href="carrito.php" class="elemento-accion boton-item-carrito">
+                <!-- Carrito -->
+                <a href="carrito.php" class="elemento-accion boton-item-carrito <?php echo ($current_page == 'carrito.php') ? 'activo' : ''; ?>">
                     <div class="contenedor-icono-carrito">
-                        <svg class="icono-accion" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="9" cy="21" r="1"></circle>
-                            <circle cx="20" cy="21" r="1"></circle>
-                         img src="img/svg/icono-carrito.svg" alt="Carrito" class="icono-accion"ss="etiqueta-accion">CARRITO</span>
+                        <img src="img/svg/icono-carrito.svg" alt="Carrito" class="icono-accion">
+                        <?php if ($cant_items_carrito > 0): ?>
+                            <span class="insignia-carrito"><?php echo $cant_items_carrito; ?></span>
+                        <?php endif; ?>
+                    </div>
+                    <span class="etiqueta-accion">CARRITO</span>
                 </a>
             </div>
         </div>

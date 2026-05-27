@@ -27,27 +27,13 @@ $colecciones = [
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Groove Records - Colecciones</title>
+    <title>Colecciones - Rocky Records</title>
+    <link rel="stylesheet" href="css/estilos.css">
     <link rel="stylesheet" href="colecciones.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
-    <header class="navbar">
-        <div class="logo">Groove Records</div>
-        <nav>
-            <a href="index.php">Inicio</a>
-            <a href="viniles.php">Viniles</a>
-            <a href="cds.php">CD's</a>
-            <a href="generos.php">Géneros</a>
-            <a href="colecciones.php" class="active">Colecciones</a>
-        </nav>
-        <div class="nav-icons">
-            <i class="fas fa-search"></i>
-            <i class="fas fa-user"></i>
-            <i class="fas fa-shopping-cart"></i>
-        </div>
-    </header>
+    <?php include 'header.php'; ?>
 
     <main class="colecciones-container">
         <h1 class="main-title">COLECCIONES</h1>

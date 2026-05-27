@@ -1,7 +1,7 @@
 <?php
 // Configuración de los parámetros locales de XAMPP
 $host = 'localhost';
-$db   = 'rocky_records'; // El nombre exacto que ya corregimos
+$db   = 'rockyrecords_db'; // El nombre exacto de la base de datos
 $user = 'root';          // El usuario por defecto en XAMPP es root
 $pass = '';              // Por defecto en XAMPP viene vacío
 $charset = 'utf8mb4';
