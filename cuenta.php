@@ -1,14 +1,12 @@
 <?php
 include 'db.php';
 
-// Cerrar sesion
 if (isset($_GET['logout'])) {
     session_destroy();
     header('Location: login.php');
     exit;
 }
 
-// Redirigir si no esta logueado
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit;

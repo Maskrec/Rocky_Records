@@ -13,18 +13,15 @@ if (isset($pdo)) {
             $cant_items_carrito = $cart_res['total'];
         }
     } catch (Exception $e) {
-        // Silenciar error en caso de que la tabla o sesion no exista
     }
 }
 ?>
-<!-- Fuentes de Google -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Satisfy&display=swap" rel="stylesheet">
 
 <header class="cabecera-principal">
     <div class="contenedor-cabecera">
-        <!-- Area del Logotipo -->
         <a href="index.php" class="enlace-logo">
             <div class="logo-vinilo">
                 <img src="img/svg/logo-vinilo.svg" alt="Logo Rocky Records" class="logo-vinilo-img">
@@ -60,13 +57,11 @@ if (isset($pdo)) {
             </form>
             
             <div class="enlaces-accion-cabecera">
-                <!-- Mi Cuenta -->
                 <a href="cuenta.php" class="elemento-accion <?php echo ($current_page == 'cuenta.php') ? 'activo' : ''; ?>">
                     <img src="img/svg/icono-usuario.svg" alt="Usuario" class="icono-accion">
                     <span class="etiqueta-accion"><?php echo isset($_SESSION['nombre']) ? htmlspecialchars($_SESSION['nombre']) : 'MI CUENTA'; ?></span>
                 </a>
                 
-                <!-- Carrito -->
                 <a href="carrito.php" class="elemento-accion boton-item-carrito <?php echo ($current_page == 'carrito.php') ? 'activo' : ''; ?>">
                     <div class="contenedor-icono-carrito">
                         <img src="img/svg/icono-carrito.svg" alt="Carrito" class="icono-accion">

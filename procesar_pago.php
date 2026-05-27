@@ -1,7 +1,6 @@
 <?php
 include 'db.php';
 
-// Validar que el usuario haya iniciado sesion
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit;
@@ -18,7 +17,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     try {
-        // 1. Obtener los productos actuales en el carrito para calcular el total real
         $stmt = $pdo->prepare("
             SELECT p.precio, p.precio_oferta, c.cantidad 
             FROM carrito c 
@@ -35,11 +33,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $subtotal_productos += $precio_final * $item['cantidad'];
             }
 
-            // Sumar tarifa fija de envio de $99
             $costo_envio = 99.00;
             $total_final = $subtotal_productos + $costo_envio;
 
-            // 2. Insertar el pedido en la base de datos
             $insert = $pdo->prepare("
                 INSERT INTO pedidos (id_usuario, total, estado, fecha_pedido) 
                 VALUES (?, ?, 'completado', CURRENT_TIMESTAMP)
@@ -47,11 +43,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $insert->execute([$user_id, $total_final]);
             $pedido_id = $pdo->lastInsertId();
 
-            // 3. Vaciar el carrito de la sesion actual
             $clear_cart = $pdo->prepare("DELETE FROM carrito WHERE session_id = ?");
             $clear_cart->execute([$session_id]);
 
-            // 4. Redirigir al ticket pasando el pedido_id y la direccion
             header('Location: ticket.php?pedido_id=' . $pedido_id . '&direccion=' . urlencode($direccion));
             exit;
         }
@@ -60,6 +54,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// En caso de acceso incorrecto, volver al carrito
 header('Location: carrito.php');
 exit;

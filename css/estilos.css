@@ -1,4 +1,4 @@
-/* Groove Records - Hoja de Estilos */
+/* ==========================================================================\n   GROOVE RECORDS - HOJA DE ESTILOS\n   ========================================================================== */
 
 :root {
     --fondo-carbon: #0c0a09;
@@ -17,7 +17,7 @@
     --fuente-script: 'Satisfy', cursive;
 }
 
-/* Estilos de Restablecimiento y Base */
+/* SECCION: ESTILOS BASE Y VARIABLES */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -36,7 +36,7 @@ body {
 }
 
 
-/*diseño de la Cabecera */
+/* SECCION: CABECERA (HEADER) */
 .cabecera-principal {
     background-color: var(--fondo-carbon);
     border-bottom: 2px solid var(--color-naranja);
@@ -57,7 +57,7 @@ body {
     flex-wrap: wrap;
 }
 
-/* Logotipo */
+
 .enlace-logo {
     display: flex;
     align-items: center;
@@ -116,7 +116,7 @@ body {
     margin-top: 2px;
 }
 
-/* Enlaces de Navegacion */
+
 .navegacion-principal {
     display: flex;
     align-items: center;
@@ -155,7 +155,7 @@ body {
     width: 100%;
 }
 
-/* Controles de Usuario y Busqueda */
+
 .controles-usuario {
     display: flex;
     align-items: center;
@@ -266,7 +266,7 @@ body {
     border: 1.5px solid var(--fondo-carbon);
 }
 
-/* Seccion Hero */
+/* SECCION: HERO */
 .seccion-hero {
     background: radial-gradient(circle at 60% 50%, #292420 0%, var(--fondo-carbon) 100%);
     color: var(--texto-claro);
@@ -349,7 +349,7 @@ body {
     filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.5));
 }
 
-/* Insignia Flotante de Envios */
+
 .insignia-envio {
     position: absolute;
     bottom: 10px;
@@ -387,7 +387,7 @@ body {
 }
 
 
-/* Animaciones */
+
 @keyframes flotar {
 
     0%,
@@ -416,7 +416,7 @@ body {
     }
 }
 
-/* Barra de Caracteristicas */
+/* SECCION: CARACTERISTICAS */
 .barra-caracteristicas {
     background-color: #eae1d4;
     background-image: url('textura-papel.jpg');
@@ -467,7 +467,7 @@ body {
     color: var(--texto-atenuado);
 }
 
-/* Contenedores de Secciones */
+
 .contenedor-seccion {
     max-width: 1400px;
     margin: 0 auto;
@@ -505,7 +505,7 @@ body {
     color: var(--color-naranja-hover);
 }
 
-/* Cuadricula del Catalogo */
+
 .catalogo {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -513,7 +513,7 @@ body {
     padding-bottom: 20px;
 }
 
-/* Tarjeta de Producto */
+/* SECCION: PRODUCTOS Y CATALOGO */
 .tarjeta-producto {
     background-color: var(--color-tarjeta);
     background-image: url('textura-papel.jpg');
@@ -533,7 +533,7 @@ body {
     border-color: #bfaea0;
 }
 
-/* Contenedor de Funda */
+
 .contenedor-funda {
     position: relative;
     width: 100%;
@@ -542,7 +542,7 @@ body {
     margin-bottom: 16px;
 }
 
-/* Contenedor de Portada */
+
 .contenedor-portada {
     position: relative;
     width: 75%;
@@ -564,7 +564,7 @@ body {
     transition: transform 0.4s ease;
 }
 
-/* Etiqueta Nuevo sobre la portada */
+
 .etiqueta-nuevo {
     position: absolute;
     top: 8px;
@@ -581,7 +581,7 @@ body {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-/* Disco Fisico (Vinilo o CD) */
+
 .disco-soporte {
     position: absolute;
     width: 70%;
@@ -595,13 +595,13 @@ body {
     transform: translateX(0) rotate(0deg);
 }
 
-/* Soporte de Vinilo */
+
 .disco-soporte.vinyl {
     background: radial-gradient(circle, #383431 0%, #1c1a19 35%, #12100f 65%, #050404 100%);
     border: 1px solid #111;
 }
 
-/* Ranuras/Surcos del Vinilo */
+
 .disco-soporte.vinyl::before {
     content: '';
     position: absolute;
@@ -614,7 +614,7 @@ body {
     z-index: 3;
 }
 
-/* Centro/Etiqueta del Disco */
+
 .etiqueta-disco {
     position: absolute;
     top: 50%;
@@ -641,7 +641,7 @@ body {
     box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
-/* Soporte de CD */
+
 .disco-soporte.cd {
     background: conic-gradient(from 0deg, #d3d7de 0%, #cbd0d8 15%, #eceef1 30%, #aab0b9 45%, #eceef1 60%, #cbd0d8 75%, #eceef1 90%, #d3d7de 100%);
     border: 1px solid #cbd0d8;
@@ -676,7 +676,7 @@ body {
     box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.25);
 }
 
-/* Interacciones: Hover (Asoma un poco el disco) */
+
 .tarjeta-producto:hover .contenedor-portada {
     transform: translateX(-6%);
 }
@@ -685,7 +685,7 @@ body {
     transform: translateX(18%) rotate(25deg);
 }
 
-/* Interacciones: Estado de Reproduccion (Giro continuo y funda grande) */
+
 .tarjeta-producto.reproduciendo {
     border-color: var(--color-naranja);
     box-shadow: 0 10px 25px rgba(194, 65, 12, 0.12);
@@ -702,7 +702,7 @@ body {
     z-index: 4;
 }
 
-/* Textos de Datos del Album */
+
 .artista-album {
     font-size: 11px;
     font-weight: 700;
@@ -744,7 +744,7 @@ body {
     border-color: rgba(194, 65, 12, 0.3);
 }
 
-/* Estilos del Reproductor de Audio */
+
 .reproductor {
     margin-bottom: 14px;
     background-color: rgba(0, 0, 0, 0.03);
@@ -758,7 +758,7 @@ body {
     outline: none;
 }
 
-/* Pie de la Tarjeta (Precio y Boton Carrito) */
+
 .pie-tarjeta {
     display: flex;
     justify-content: space-between;
@@ -804,7 +804,7 @@ body {
     display: block;
 }
 
-/* Cuadricula de Generos */
+
 .cuadricula-generos {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
@@ -855,7 +855,7 @@ body {
     opacity: 0.5;
 }
 
-/* Pie de Pagina Rediseñado */
+/* SECCION: PIE DE PAGINA (FOOTER) */
 .pie-principal {
     background-color: var(--fondo-carbon);
     color: #a8a29e;
@@ -1004,7 +1004,7 @@ body {
     letter-spacing: 0.5px;
 }
 
-/* Correcciones de Diseño en Carrito y Cuenta */
+/* SECCION: CARRITO Y CUENTA */
 .contenedor-carrito,
 .contenedor-cuenta {
     max-width: 1200px;
@@ -1065,7 +1065,7 @@ body {
     background-color: var(--color-crema);
 }
 
-/* Puntos de Ruptura Responsivos */
+/* SECCION: DISEÑO RESPONSIVO */
 @media (max-width: 1200px) {
     .contenedor-pie {
         grid-template-columns: 1fr 1fr 1fr;

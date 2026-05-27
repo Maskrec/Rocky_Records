@@ -1,7 +1,6 @@
 <?php
 include 'db.php';
 
-// Validar que el usuario haya iniciado sesion
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit;
@@ -12,7 +11,6 @@ $direccion = isset($_GET['direccion']) ? trim($_GET['direccion']) : 'Direccion r
 $user_id = $_SESSION['user_id'];
 
 try {
-    // Obtener datos del pedido y verificar propiedad (a menos que sea admin)
     if ($_SESSION['rol'] === 'admin') {
         $stmt = $pdo->prepare("SELECT * FROM pedidos WHERE id = ?");
         $stmt->execute([$pedido_id]);
@@ -26,7 +24,6 @@ try {
         die("Error: El pedido no existe o no tienes autorizacion para verlo.");
     }
 
-    // Obtener los datos del usuario del pedido
     $stmt_user = $pdo->prepare("SELECT nombre, email FROM usuarios WHERE id = ?");
     $stmt_user->execute([$pedido['id_usuario']]);
     $usuario = $stmt_user->fetch();

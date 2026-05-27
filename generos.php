@@ -1,5 +1,4 @@
 <?php
-// 1. Buscamos de forma segura el archivo db.php en la raiz del proyecto
 if (file_exists('db.php')) {
     include 'db.php';
 } elseif (file_exists('../db.php')) {
@@ -8,17 +7,13 @@ if (file_exists('db.php')) {
     die("Error critico: No se encontro el archivo db.php en el proyecto.");
 }
 
-// 2. Verificamos si la variable $pdo existe tras el include, si no, intentamos rescatarla
 if (!isset($pdo)) {
-    // Si tus compañeros metieron la conexion dentro de una funcion o clase,
-    // o si el archivo db.php usa otra variable global, creamos un respaldo aqui.
     if (isset($conn)) { $pdo = $conn; }
     elseif (isset($conexion)) { $pdo = $conexion; }
     elseif (isset($db_connect)) { $pdo = $db_connect; }
 }
 
-// 3. Hacemos la consulta usando el formato PDO seguro
-$generos = []; // Inicializamos vacio por seguridad
+$generos = [];
 if (isset($pdo) && $pdo !== null) {
     try {
         $query = "SELECT ID, Nombre_Genero, Descripcion, Portada FROM genero_musical";
@@ -44,7 +39,6 @@ if (isset($pdo) && $pdo !== null) {
 <body>
 
     <?php 
-    // Insertamos el menu de navegacion (si existe en la raiz)
     if (file_exists('header.php')) { include 'header.php'; } 
     ?>
 
@@ -53,7 +47,6 @@ if (isset($pdo) && $pdo !== null) {
         
         <section class="generos-grid">
             <?php 
-            // 4. Recorremos los resultados que trajimos de la Base de Datos
             if (!empty($generos)):
                 foreach ($generos as $genero): 
             ?>
@@ -76,7 +69,6 @@ if (isset($pdo) && $pdo !== null) {
     </main>
 
     <?php 
-    // Insertamos el pie de pagina (si existe en la raiz)
     if (file_exists('footer.php')) { include 'footer.php'; } 
     ?>
 

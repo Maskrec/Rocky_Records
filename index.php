@@ -89,7 +89,6 @@
 
             <div class="catalogo">
                 <?php
-                // Obtener productos dinamicos de la base de datos
                 $stmt = $pdo->query("SELECT * FROM productos ORDER BY fecha_agregado DESC");
                 while ($row = $stmt->fetch()) {
                     $precio_final = $row['precio_oferta'] ? $row['precio_oferta'] : $row['precio'];
@@ -98,17 +97,14 @@
                     $format_label = $is_cd ? 'CD' : 'VINYL';
                     ?>
                     <div class="tarjeta-producto" id="card-<?php echo $row['id']; ?>">
-                        <!-- Contenedor de Funda con portada y disco que se asoma -->
                         <div class="contenedor-funda">
                             <span class="etiqueta-nuevo">NUEVO</span>
 
-                            <!-- Funda / Portada -->
                             <div class="contenedor-portada">
                                 <img src="uploads/portadas/<?php echo htmlspecialchars($row['imagen_url']); ?>"
                                     alt="Portada de <?php echo htmlspecialchars($row['titulo']); ?>" class="imagen-portada">
                             </div>
 
-                            <!-- Disco Fisico (Vinilo o CD) -->
                             <div class="disco-soporte <?php echo $disc_class; ?>">
                                 <div class="etiqueta-disco"
                                     style="background-image: url('uploads/portadas/<?php echo htmlspecialchars($row['imagen_url']); ?>'); background-size: cover; background-position: center;">
@@ -117,7 +113,6 @@
                             </div>
                         </div>
 
-                        <!-- Detalles del Producto -->
                         <span class="artista-album"><?php echo htmlspecialchars($row['artista']); ?></span>
                         <h3 class="titulo-album" title="<?php echo htmlspecialchars($row['titulo']); ?>">
                             <?php echo htmlspecialchars($row['titulo']); ?></h3>
@@ -126,7 +121,6 @@
                                 class="insignia-formato <?php echo !$is_cd ? 'formato-vinilo' : ''; ?>"><?php echo $format_label; ?></span>
                         </div>
 
-                        <!-- Mini Reproductor de Demostracion -->
                         <div class="reproductor">
                             <audio controls controlsList="nodownload" preload="none">
                                 <source src="uploads/demos/<?php echo htmlspecialchars($row['demo_url']); ?>"
@@ -134,7 +128,6 @@
                             </audio>
                         </div>
 
-                        <!-- Precio y Boton de Carrito -->
                         <div class="pie-tarjeta">
                             <span class="etiqueta-precio">$<?php echo number_format($precio_final, 0); ?> MXN</span>
 
@@ -155,7 +148,7 @@
 
     <?php include 'footer.php'; ?>
 
-    <!-- Script de Reproduccion  -->
+    <!-- SECCION: SCRIPT DE AUDIO REPRODUCTOR -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const reproductores = document.querySelectorAll('.reproductor audio');
@@ -164,24 +157,20 @@
                 const tarjeta = reproductor.closest('.tarjeta-producto');
 
                 reproductor.addEventListener('play', () => {
-                    // Pausar todos los demas reproductores en la pagina
                     reproductores.forEach(otroReproductor => {
                         if (otroReproductor !== reproductor) {
                             otroReproductor.pause();
                         }
                     });
 
-                    // Agregar clase de reproduccion a la tarjeta, activando el escalado de la portada y rotacion del disco
                     tarjeta.classList.add('reproduciendo');
                 });
 
                 reproductor.addEventListener('pause', () => {
-                    // Remover clase de reproduccion, regresando el disco y deteniendo la rotacion
                     tarjeta.classList.remove('reproduciendo');
                 });
 
                 reproductor.addEventListener('ended', () => {
-                    // Limpiar clase cuando termine la reproduccion
                     tarjeta.classList.remove('reproduciendo');
                 });
             });

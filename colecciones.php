@@ -1,10 +1,8 @@
 <?php
-// verificacion de errores activa por seguridad
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Incluimos db.php que contiene la conexion segura PDO en $pdo
 if (file_exists('db.php')) {
     include 'db.php';
 } elseif (file_exists('../db.php')) {
@@ -13,14 +11,12 @@ if (file_exists('db.php')) {
     die("Error critico: No se encontro el archivo db.php en el proyecto.");
 }
 
-// Verificamos si la variable $pdo existe tras el include, si no, intentamos rescatarla
 if (!isset($pdo)) {
     if (isset($conn)) { $pdo = $conn; }
     elseif (isset($conexion)) { $pdo = $conexion; }
     elseif (isset($db_connect)) { $pdo = $db_connect; }
 }
 
-// Consulta de Colecciones
 $colecciones = [];
 if (isset($pdo)) {
     try {
@@ -65,7 +61,7 @@ if (isset($pdo)) {
                         </div>
                     </a>
             <?php 
-                } // Fin del foreach
+                }
             } else {
                 $respaldos = [
                     ['ID' => 1, 'Nombre' => 'Ediciones Limitadas', 'Descripcion' => 'Joyas musicales en formatos exclusivos y tirajes ultra recortados para coleccionistas.', 'Portada' => 'img/EdicionLimit.jpg'],
@@ -88,8 +84,8 @@ if (isset($pdo)) {
                         </div>
                     </a>
             <?php 
-                } // Fin del foreach de respaldo
-            } // Fin del else
+                }
+            }
             ?>
         </section>
     </main>

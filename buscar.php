@@ -28,7 +28,6 @@
         <div class="catalogo">
             <?php
             if ($q !== '') {
-                // Buscar por titulo, artista o genero
                 $stmt = $pdo->prepare("SELECT * FROM productos WHERE titulo LIKE ? OR artista LIKE ? OR genero LIKE ? ORDER BY fecha_agregado DESC");
                 $like_q = "%$q%";
                 $stmt->execute([$like_q, $like_q, $like_q]);

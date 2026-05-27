@@ -1,4 +1,3 @@
-/*  para eliminar el overfloww de la derecha */
 html, body {
     max-width: 100%;
     overflow-x: hidden;
@@ -57,7 +56,6 @@ html, body {
     background-color: #222 !important;
 }
 
-/* Protegido: Esta regla solo aplica a las imagenes de TUS tarjetas */
 .generos-container .genero-img-wrapper img {
     width: 100% !important;
     height: 100% !important;

@@ -1,7 +1,6 @@
 <?php
 include 'db.php';
 
-// Asegurar que exista el administrador por defecto solicitado (admin / 12345678)
 try {
     $stmt_check = $pdo->prepare("SELECT id FROM usuarios WHERE nombre = ? OR email = ?");
     $stmt_check->execute(['admin', 'admin@rockyrecords.com']);
@@ -11,16 +10,14 @@ try {
         $insert_admin->execute(['admin', 'admin@rockyrecords.com', $pass_hash, 'admin']);
     }
 } catch (Exception $e) {
-    // Silenciar
 }
 
 $mensaje_error = '';
 $mensaje_exito = '';
 
-// Procesar Acceso Rapido Administrador (Bypass)
+// SECCION: ACCESO RAPIDO ADMINISTRADOR (BYPASS)
 if (isset($_POST['bypass_admin'])) {
     try {
-        // Verificar si ya existe el administrador en la base de datos
         $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE nombre = ?");
         $stmt->execute(['admin']);
         $admin = $stmt->fetch();
@@ -34,7 +31,6 @@ if (isset($_POST['bypass_admin'])) {
             $admin = $stmt->fetch();
         }
 
-        // Establecer sesion
         $_SESSION['user_id'] = $admin['id'];
         $_SESSION['nombre'] = $admin['nombre'];
         $_SESSION['rol'] = $admin['rol'];
@@ -46,7 +42,7 @@ if (isset($_POST['bypass_admin'])) {
     }
 }
 
-// Procesar Registro
+// SECCION: REGISTRO DE CLIENTES
 if (isset($_POST['register'])) {
     $nombre = trim($_POST['nombre'] ?? '');
     $email = trim($_POST['email'] ?? '');
@@ -54,7 +50,6 @@ if (isset($_POST['register'])) {
 
     if ($nombre !== '' && $email !== '' && $password !== '') {
         try {
-            // Verificar si el email o nombre ya existe
             $stmt = $pdo->prepare("SELECT id FROM usuarios WHERE email = ? OR nombre = ?");
             $stmt->execute([$email, $nombre]);
             if ($stmt->fetch()) {
@@ -73,7 +68,7 @@ if (isset($_POST['register'])) {
     }
 }
 
-// Procesar Iniciar Sesion (Permite usar Email o Nombre)
+// SECCION: INICIO DE SESION
 if (isset($_POST['login'])) {
     $email_or_user = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
@@ -89,7 +84,6 @@ if (isset($_POST['login'])) {
                 $_SESSION['nombre'] = $user['nombre'];
                 $_SESSION['rol'] = $user['rol'];
 
-                // Redirigir segun el rol
                 if ($user['rol'] === 'admin') {
                     header('Location: admin.php');
                 } else {

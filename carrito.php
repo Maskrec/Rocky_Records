@@ -1,14 +1,12 @@
 <?php 
 include 'db.php'; 
 
-// Logica de eliminacion de elementos del carrito
 if (isset($_GET['eliminar_id'])) {
     try {
         $eliminar_id = (int)$_GET['eliminar_id'];
         $stmt_del = $pdo->prepare("DELETE FROM carrito WHERE id = ? AND session_id = ?");
         $stmt_del->execute([$eliminar_id, session_id()]);
     } catch (Exception $e) {
-        // Silenciar
     }
     header('Location: carrito.php');
     exit;
