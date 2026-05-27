@@ -1,10 +1,10 @@
 <?php
-// verificación de errorse activo por seguridad
+// verificación de errores activa por seguridad
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// 2. Conexión PDO local idéntica a la que yaa funcionó
+// Conexión PDO local idéntica a la que ya funcionó
 $host = 'localhost';
 $db   = 'Rocky_Records'; 
 $user = 'root';
@@ -20,7 +20,8 @@ try {
     ];
     $pdo = new PDO($dsn, $user, $pass, $options);
 } catch (PDOException $e) {
-    die("<p style='color:red; background:white; padding:10px;'>Error de conexión local: " . $e->getMessage() . "</p>");
+    // Silenciamos el mensaje tosco para que no rompa visualmente el diseño
+    $error_conexion = $e->getMessage();
 }
 
 // Consulta de Colecciones
@@ -31,7 +32,6 @@ if (isset($pdo)) {
         $stmt = $pdo->query($query); 
         $colecciones = $stmt->fetchAll();
     } catch (PDOException $e) {
-
         $error_tabla = $e->getMessage();
     }
 }
@@ -44,9 +44,7 @@ if (isset($pdo)) {
     <title>Groove Records - Colecciones Especiales</title>
     
     <link rel="stylesheet" href="css/estilos.css">
-    
-    <link rel="stylesheet" href="colecciones.css">
-    
+    <link rel="stylesheet" href="css/colecciones.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
@@ -63,7 +61,7 @@ if (isset($pdo)) {
             ?>
                     <a href="cds.php?coleccion_id=<?php echo $col['ID']; ?>" class="coleccion-card">
                         <div class="coleccion-img-wrapper">
-                            <img src="<?php echo $col['Portada_Colección']; ?>" alt="<?php echo $col['Nombre']; ?>">
+                            <img src="<?php echo $col['Portada_Colección']; ?>" alt="<?php echo $col['Nombre_Colección']; ?>">
                         </div>
                         <div class="coleccion-info">
                             <h2><?php echo $col['Nombre_Colección']; ?></h2>
@@ -86,7 +84,7 @@ if (isset($pdo)) {
             ?>
                     <a href="cds.php?coleccion_id=<?php echo $col['ID']; ?>" class="coleccion-card">
                         <div class="coleccion-img-wrapper">
-                            <div style="width:100%; height:100%; background:#222; display:flex; align-items:center; justify-content:center; color:#cbbead; font-weight:bold; font-family:sans-serif;"></div>
+                            <img src="<?php echo $col['Portada']; ?>" alt="<?php echo $col['Nombre']; ?>">
                         </div>
                         <div class="coleccion-info">
                             <h2><?php echo $col['Nombre']; ?></h2>
