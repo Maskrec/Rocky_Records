@@ -13,7 +13,7 @@ if (isset($pdo)) {
             $cant_items_carrito = $cart_res['total'];
         }
     } catch (Exception $e) {
-        // Silenciar error en caso de que la tabla o sesión no exista
+        // Silenciar error en caso de que la tabla o sesion no exista
     }
 }
 ?>
@@ -24,7 +24,7 @@ if (isset($pdo)) {
 
 <header class="cabecera-principal">
     <div class="contenedor-cabecera">
-        <!-- Área del Logotipo -->
+        <!-- Area del Logotipo -->
         <a href="index.php" class="enlace-logo">
             <div class="logo-vinilo">
                 <img src="img/svg/logo-vinilo.svg" alt="Logo Rocky Records" class="logo-vinilo-img">
@@ -44,8 +44,7 @@ if (isset($pdo)) {
             <a href="index.php" class="enlace-navegacion <?php echo ($current_page == 'index.php') ? 'activo' : ''; ?>">INICIO</a>
             <a href="viniles.php" class="enlace-navegacion <?php echo ($current_page == 'viniles.php') ? 'activo' : ''; ?>">VINILES</a>
             <a href="cds.php" class="enlace-navegacion <?php echo ($current_page == 'cds.php') ? 'activo' : ''; ?>">CD'S</a>
-            <a href="index.php#nuevos-lanzamientos" class="enlace-navegacion">NUEVOS LANZAMIENTOS</a>
-            <a href="generos.php" class="enlace-navegacion <?php echo ($current_page == 'generos.php') ? 'activo' : ''; ?>">GÉNEROS</a>
+            <a href="generos.php" class="enlace-navegacion <?php echo ($current_page == 'generos.php') ? 'activo' : ''; ?>">GENEROS</a>
             <a href="index.php#ofertas" class="enlace-navegacion">OFERTAS</a>
             <a href="colecciones.php" class="enlace-navegacion <?php echo ($current_page == 'colecciones.php') ? 'activo' : ''; ?>">COLECCIONES</a>
         </nav>
@@ -54,7 +53,7 @@ if (isset($pdo)) {
         <div class="controles-usuario">
         
             <form action="buscar.php" method="GET" class="formulario-busqueda">
-                <input type="text" name="q" placeholder="Buscar artista, álbum, género..." required>
+                <input type="text" name="q" placeholder="Buscar artista, album, genero..." required>
                 <button type="submit" class="boton-busqueda">
                     <img src="img/svg/icono-lupa.svg" alt="Buscar" class="icono-lupa">
                 </button>
@@ -64,7 +63,7 @@ if (isset($pdo)) {
                 <!-- Mi Cuenta -->
                 <a href="cuenta.php" class="elemento-accion <?php echo ($current_page == 'cuenta.php') ? 'activo' : ''; ?>">
                     <img src="img/svg/icono-usuario.svg" alt="Usuario" class="icono-accion">
-                    <span class="etiqueta-accion">MI CUENTA</span>
+                    <span class="etiqueta-accion"><?php echo isset($_SESSION['nombre']) ? htmlspecialchars($_SESSION['nombre']) : 'MI CUENTA'; ?></span>
                 </a>
                 
                 <!-- Carrito -->

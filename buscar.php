@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resultados de búsqueda - Rocky Records</title>
+    <title>Resultados de busqueda - Rocky Records</title>
     <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
@@ -17,9 +17,9 @@
                 <?php 
                 $q = isset($_GET['q']) ? $_GET['q'] : '';
                 if ($q !== '') {
-                    echo 'Resultados de búsqueda para: "' . htmlspecialchars($q) . '"';
+                    echo 'Resultados de busqueda para: "' . htmlspecialchars($q) . '"';
                 } else {
-                    echo 'Búsqueda';
+                    echo 'Busqueda';
                 }
                 ?>
             </h2>
@@ -28,7 +28,7 @@
         <div class="catalogo">
             <?php
             if ($q !== '') {
-                // Buscar por título, artista o género
+                // Buscar por titulo, artista o genero
                 $stmt = $pdo->prepare("SELECT * FROM productos WHERE titulo LIKE ? OR artista LIKE ? OR genero LIKE ? ORDER BY fecha_agregado DESC");
                 $like_q = "%$q%";
                 $stmt->execute([$like_q, $like_q, $like_q]);
@@ -88,10 +88,10 @@
             <?php 
                     }
                 } else {
-                    echo '<p style="width:100%; text-align:center;">No se encontraron resultados para la búsqueda.</p>';
+                    echo '<p style="width:100%; text-align:center;">No se encontraron resultados para la busqueda.</p>';
                 }
             } else {
-                echo '<p style="width:100%; text-align:center;">Por favor, ingresa un término de búsqueda válido.</p>';
+                echo '<p style="width:100%; text-align:center;">Por favor, ingresa un termino de busqueda valido.</p>';
             }
             ?>
         </div>

@@ -1,16 +1,16 @@
 <?php
-// verificación de errores activa por seguridad
+// verificacion de errores activa por seguridad
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Incluimos db.php que contiene la conexión segura PDO en $pdo
+// Incluimos db.php que contiene la conexion segura PDO en $pdo
 if (file_exists('db.php')) {
     include 'db.php';
 } elseif (file_exists('../db.php')) {
     include '../db.php';
 } else {
-    die("Error crítico: No se encontró el archivo db.php en el proyecto.");
+    die("Error critico: No se encontro el archivo db.php en el proyecto.");
 }
 
 // Verificamos si la variable $pdo existe tras el include, si no, intentamos rescatarla
@@ -24,7 +24,7 @@ if (!isset($pdo)) {
 $colecciones = [];
 if (isset($pdo)) {
     try {
-        $query = "SELECT `ID`, `Nombre_Colección`, `Portada_Colección`, `Descripción_Colección` FROM `colecciones`";
+        $query = "SELECT `ID`, `Nombre_Coleccion`, `Portada_Coleccion`, `Descripcion_Coleccion` FROM `colecciones`";
         $stmt = $pdo->query($query); 
         $colecciones = $stmt->fetchAll();
     } catch (PDOException $e) {
@@ -57,23 +57,23 @@ if (isset($pdo)) {
             ?>
                     <a href="cds.php?coleccion_id=<?php echo $col['ID']; ?>" class="coleccion-card">
                         <div class="coleccion-img-wrapper">
-                            <img src="<?php echo $col['Portada_Colección']; ?>" alt="<?php echo $col['Nombre_Colección']; ?>">
+                            <img src="<?php echo $col['Portada_Coleccion']; ?>" alt="<?php echo $col['Nombre_Coleccion']; ?>">
                         </div>
                         <div class="coleccion-info">
-                            <h2><?php echo $col['Nombre_Colección']; ?></h2>
-                            <p><?php echo $col['Descripción_Colección']; ?></p>
+                            <h2><?php echo $col['Nombre_Coleccion']; ?></h2>
+                            <p><?php echo $col['Descripcion_Coleccion']; ?></p>
                         </div>
                     </a>
             <?php 
                 } // Fin del foreach
             } else {
                 $respaldos = [
-                    ['ID' => 1, 'Nombre' => 'Ediciones Limitadas', 'Descripción' => 'Joyas musicales en formatos exclusivos y tirajes ultra recortados para coleccionistas.', 'Portada' => 'img/EdicionLimit.jpg'],
-                    ['ID' => 2, 'Nombre' => 'Los Más Vendidos', 'Descripción' => 'Los discos que están haciendo historia y no paran de sonar en los tocadiscos de todo el mundo.', 'Portada' => 'img/LosVendidos.jpg'],
-                    ['ID' => 3, 'Nombre' => 'Descubrimientos', 'Descripción' => 'Novedades para tu oído dentro de la industria musical.', 'Portada' => 'img/Descubrimientos.jpg'],
-                    ['ID' => 4, 'Nombre' => 'TOP 5', 'Descripción' => 'Lo mejor de los mejores 5 artistas en este momento.', 'Portada' => 'img/Top5.jpg'],
-                    ['ID' => 5, 'Nombre' => 'Clásicos', 'Descripción' => 'Para que no olvides la buena música que dió lugar a lo nuevo.', 'Portada' => 'img/Clásicos.jpg'],
-                    ['ID' => 6, 'Nombre' => 'Poco Conocido', 'Descripción' => 'Una búsqueda que termina con un encuentro con música escondida de gran valor.', 'Portada' => 'img/PocoCono.jpg']
+                    ['ID' => 1, 'Nombre' => 'Ediciones Limitadas', 'Descripcion' => 'Joyas musicales en formatos exclusivos y tirajes ultra recortados para coleccionistas.', 'Portada' => 'img/EdicionLimit.jpg'],
+                    ['ID' => 2, 'Nombre' => 'Los Mas Vendidos', 'Descripcion' => 'Los discos que estan haciendo historia y no paran de sonar en los tocadiscos de todo el mundo.', 'Portada' => 'img/LosVendidos.jpg'],
+                    ['ID' => 3, 'Nombre' => 'Descubrimientos', 'Descripcion' => 'Novedades para tu oido dentro de la industria musical.', 'Portada' => 'img/Descubrimientos.jpg'],
+                    ['ID' => 4, 'Nombre' => 'TOP 5', 'Descripcion' => 'Lo mejor de los mejores 5 artistas en este momento.', 'Portada' => 'img/Top5.jpg'],
+                    ['ID' => 5, 'Nombre' => 'Clasicos', 'Descripcion' => 'Para que no olvides la buena musica que dio lugar a lo nuevo.', 'Portada' => 'img/Clasicos.jpg'],
+                    ['ID' => 6, 'Nombre' => 'Poco Conocido', 'Descripcion' => 'Una busqueda que termina con un encuentro con musica escondida de gran valor.', 'Portada' => 'img/PocoCono.jpg']
                 ];
 
                 foreach ($respaldos as $col) {
@@ -84,7 +84,7 @@ if (isset($pdo)) {
                         </div>
                         <div class="coleccion-info">
                             <h2><?php echo $col['Nombre']; ?></h2>
-                            <p><?php echo $col['Descripción']; ?></p>
+                            <p><?php echo $col['Descripcion']; ?></p>
                         </div>
                     </a>
             <?php 

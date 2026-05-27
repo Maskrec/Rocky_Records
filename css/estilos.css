@@ -72,7 +72,7 @@ body {
     transition: transform 0.5s ease;
 }
 
-.enlace-logo:hover .logo-vinilo {
+.cabecera-principal .enlace-logo:hover .logo-vinilo {
     transform: rotate(360deg);
 }
 
@@ -116,7 +116,7 @@ body {
     margin-top: 2px;
 }
 
-/* Enlaces de Navegación */
+/* Enlaces de Navegacion */
 .navegacion-principal {
     display: flex;
     align-items: center;
@@ -145,15 +145,17 @@ body {
     transition: width 0.3s ease;
 }
 
-.enlace-navegacion:hover, .enlace-navegacion.activo {
+.enlace-navegacion:hover,
+.enlace-navegacion.activo {
     color: var(--color-naranja);
 }
 
-.enlace-navegacion:hover::after, .enlace-navegacion.activo::after {
+.enlace-navegacion:hover::after,
+.enlace-navegacion.activo::after {
     width: 100%;
 }
 
-/* Controles de Usuario y Búsqueda */
+/* Controles de Usuario y Busqueda */
 .controles-usuario {
     display: flex;
     align-items: center;
@@ -201,7 +203,8 @@ body {
     height: 18px;
 }
 
-.formulario-busqueda input:focus + .boton-busqueda, .boton-busqueda:hover {
+.formulario-busqueda input:focus+.boton-busqueda,
+.boton-busqueda:hover {
     filter: brightness(0) saturate(100%) invert(41%) sepia(80%) saturate(1900%) hue-rotate(3deg) brightness(98%) contrast(98%);
 }
 
@@ -263,7 +266,7 @@ body {
     border: 1.5px solid var(--fondo-carbon);
 }
 
-/* Sección Hero */
+/* Seccion Hero */
 .seccion-hero {
     background: radial-gradient(circle at 60% 50%, #292420 0%, var(--fondo-carbon) 100%);
     color: var(--texto-claro);
@@ -343,10 +346,10 @@ body {
 .imagen-hero {
     max-width: 100%;
     height: auto;
-    filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5));
+    filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.5));
 }
 
-/* Insignia Flotante de Envíos */
+/* Insignia Flotante de Envios */
 .insignia-envio {
     position: absolute;
     bottom: 10px;
@@ -361,7 +364,7 @@ body {
     align-items: center;
     justify-content: center;
     border: 2px dashed #bba891;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
     z-index: 5;
     animation: flotar 4s ease-in-out infinite;
 }
@@ -386,20 +389,34 @@ body {
 
 /* Animaciones */
 @keyframes flotar {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
 }
 
 @keyframes rotar {
-    100% { transform: rotate(360deg); }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 @keyframes rotar-reproduciendo {
-    0% { transform: translateX(38%) rotate(0deg); }
-    100% { transform: translateX(38%) rotate(360deg); }
+    0% {
+        transform: translateX(38%) rotate(0deg);
+    }
+
+    100% {
+        transform: translateX(38%) rotate(360deg);
+    }
 }
 
-/* Barra de Características */
+/* Barra de Caracteristicas */
 .barra-caracteristicas {
     background-color: #eae1d4;
     background-image: url('textura-papel.jpg');
@@ -488,7 +505,7 @@ body {
     color: var(--color-naranja-hover);
 }
 
-/* Cuadrícula del Catálogo */
+/* Cuadricula del Catalogo */
 .catalogo {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -503,7 +520,7 @@ body {
     border: 1px solid var(--color-borde);
     padding: 16px;
     border-radius: 4px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.03);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);
     display: flex;
     flex-direction: column;
     position: relative;
@@ -512,7 +529,7 @@ body {
 
 .tarjeta-producto:hover {
     transform: translateY(-4px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.06);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06);
     border-color: #bfaea0;
 }
 
@@ -532,7 +549,7 @@ body {
     height: 100%;
     z-index: 5;
     border-radius: 2px;
-    box-shadow: 3px 5px 12px rgba(0,0,0,0.25);
+    box-shadow: 3px 5px 12px rgba(0, 0, 0, 0.25);
     background-color: #222;
     transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     transform-origin: left center;
@@ -561,10 +578,10 @@ body {
     letter-spacing: 0.5px;
     z-index: 10;
     text-transform: uppercase;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-/* Disco Físico (Vinilo o CD) */
+/* Disco Fisico (Vinilo o CD) */
 .disco-soporte {
     position: absolute;
     width: 70%;
@@ -573,7 +590,7 @@ body {
     top: 15%;
     right: 5%;
     z-index: 2;
-    box-shadow: 2px 4px 10px rgba(0,0,0,0.25);
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.25);
     transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
     transform: translateX(0) rotate(0deg);
 }
@@ -588,9 +605,12 @@ body {
 .disco-soporte.vinyl::before {
     content: '';
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     border-radius: 50%;
-    background: repeating-radial-gradient(circle, transparent, transparent 2px, rgba(255,255,255,0.035) 2.5px, rgba(255,255,255,0.035) 3.5px);
+    background: repeating-radial-gradient(circle, transparent, transparent 2px, rgba(255, 255, 255, 0.035) 2.5px, rgba(255, 255, 255, 0.035) 3.5px);
     z-index: 3;
 }
 
@@ -617,8 +637,8 @@ body {
     background-color: var(--color-tarjeta);
     background-image: url('textura-papel.jpg');
     border-radius: 50%;
-    border: 1px solid rgba(0,0,0,0.4);
-    box-shadow: inset 1px 1px 3px rgba(0,0,0,0.3);
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 /* Soporte de CD */
@@ -630,17 +650,20 @@ body {
 .disco-soporte.cd::before {
     content: '';
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     border-radius: 50%;
     border: 4px solid rgba(255, 255, 255, 0.4);
-    background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.1) 40%, rgba(255,255,255,0) 70%);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.1) 40%, rgba(255, 255, 255, 0) 70%);
     z-index: 3;
 }
 
 .disco-soporte.cd .etiqueta-disco {
     background-color: rgba(255, 255, 255, 0.85);
-    border: 1px solid rgba(0,0,0,0.1);
-    box-shadow: 0 0 4px rgba(0,0,0,0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
 }
 
 .disco-soporte.cd .centro-disco {
@@ -649,8 +672,8 @@ body {
     background-color: var(--color-tarjeta);
     background-image: url('textura-papel.jpg');
     border-radius: 50%;
-    border: 1.5px solid rgba(0,0,0,0.15);
-    box-shadow: inset 1px 1px 3px rgba(0,0,0,0.25);
+    border: 1.5px solid rgba(0, 0, 0, 0.15);
+    box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.25);
 }
 
 /* Interacciones: Hover (Asoma un poco el disco) */
@@ -662,7 +685,7 @@ body {
     transform: translateX(18%) rotate(25deg);
 }
 
-/* Interacciones: Estado de Reproducción (Giro continuo y funda grande) */
+/* Interacciones: Estado de Reproduccion (Giro continuo y funda grande) */
 .tarjeta-producto.reproduciendo {
     border-color: var(--color-naranja);
     box-shadow: 0 10px 25px rgba(194, 65, 12, 0.12);
@@ -670,7 +693,7 @@ body {
 
 .tarjeta-producto.reproduciendo .contenedor-portada {
     transform: translateX(-10%) scale(1.04);
-    box-shadow: 5px 8px 18px rgba(0,0,0,0.3);
+    box-shadow: 5px 8px 18px rgba(0, 0, 0, 0.3);
 }
 
 .tarjeta-producto.reproduciendo .disco-soporte {
@@ -679,7 +702,7 @@ body {
     z-index: 4;
 }
 
-/* Textos de Datos del Álbum */
+/* Textos de Datos del Album */
 .artista-album {
     font-size: 11px;
     font-weight: 700;
@@ -724,7 +747,7 @@ body {
 /* Estilos del Reproductor de Audio */
 .reproductor {
     margin-bottom: 14px;
-    background-color: rgba(0,0,0,0.03);
+    background-color: rgba(0, 0, 0, 0.03);
     border-radius: 4px;
     padding: 4px;
 }
@@ -735,14 +758,14 @@ body {
     outline: none;
 }
 
-/* Pie de la Tarjeta (Precio y Botón Carrito) */
+/* Pie de la Tarjeta (Precio y Boton Carrito) */
 .pie-tarjeta {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: auto;
     padding-top: 10px;
-    border-top: 1px solid rgba(0,0,0,0.05);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .etiqueta-precio {
@@ -781,7 +804,7 @@ body {
     display: block;
 }
 
-/* Cuadrícula de Géneros */
+/* Cuadricula de Generos */
 .cuadricula-generos {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
@@ -799,60 +822,40 @@ body {
     font-size: 13px;
     letter-spacing: 1px;
     text-transform: uppercase;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
     overflow: hidden;
     position: relative;
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .tarjeta-genero span {
     z-index: 2;
-    text-shadow: 1px 2px 4px rgba(0,0,0,0.6);
+    text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.6);
 }
 
 .tarjeta-genero::before {
     content: '';
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: radial-gradient(circle, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.7) 100%);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.7) 100%);
     z-index: 1;
     transition: opacity 0.3s ease;
 }
 
 .tarjeta-genero:hover {
     transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 8px 18px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
 }
 
 .tarjeta-genero:hover::before {
     opacity: 0.5;
 }
 
-/* Estilos Individuales de Géneros */
-.tarjeta-genero.rock {
-    background: linear-gradient(135deg, #374151 0%, #111827 100%);
-}
-.tarjeta-genero.indie {
-    background: linear-gradient(135deg, #d97706 0%, #78350f 100%);
-}
-.tarjeta-genero.jazz {
-    background: linear-gradient(135deg, #0d9488 0%, #115e59 100%);
-}
-.tarjeta-genero.hiphop {
-    background: linear-gradient(135deg, #b91c1c 0%, #450a0a 100%);
-}
-.tarjeta-genero.pop {
-    background: linear-gradient(135deg, #db2777 0%, #831843 100%);
-}
-.tarjeta-genero.metal {
-    background: linear-gradient(135deg, #4b5563 0%, #1f2937 100%);
-}
-.tarjeta-genero.electronica {
-    background: linear-gradient(135deg, #2563eb 0%, #1e3a8a 100%);
-}
-
-/* Pie de Página Rediseñado */
+/* Pie de Pagina Rediseñado */
 .pie-principal {
     background-color: var(--fondo-carbon);
     color: #a8a29e;
@@ -1002,7 +1005,8 @@ body {
 }
 
 /* Correcciones de Diseño en Carrito y Cuenta */
-.contenedor-carrito, .contenedor-cuenta {
+.contenedor-carrito,
+.contenedor-cuenta {
     max-width: 1200px;
     margin: 40px auto;
     padding: 30px;
@@ -1010,10 +1014,11 @@ body {
     background-image: url('textura-papel.jpg');
     border: 1px solid var(--color-borde);
     border-radius: 6px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
 }
 
-.contenedor-carrito h1, .contenedor-cuenta h1 {
+.contenedor-carrito h1,
+.contenedor-cuenta h1 {
     font-family: var(--fuente-sans);
     font-size: 24px;
     font-weight: 800;
@@ -1035,7 +1040,8 @@ body {
     border: 1px solid var(--color-borde);
 }
 
-.tabla-datos th, .tabla-datos td {
+.tabla-datos th,
+.tabla-datos td {
     padding: 12px 15px;
     text-align: left;
     border-bottom: 1px solid var(--color-borde);
@@ -1073,21 +1079,21 @@ body {
         text-align: center;
         padding: 40px 20px;
     }
-    
+
     .contenido-hero h2 {
         font-size: 40px;
         margin: 0 auto 20px auto;
     }
-    
+
     .contenido-hero p {
         margin: 0 auto 30px auto;
     }
-    
+
     .insignia-envio {
         right: 10px;
         bottom: 10px;
     }
-    
+
     .contenedor-cabecera {
         flex-direction: column;
         gap: 15px;
@@ -1100,27 +1106,27 @@ body {
         grid-template-columns: 1fr;
         gap: 25px;
     }
-    
+
     .navegacion-principal {
         flex-wrap: wrap;
         justify-content: center;
         gap: 12px;
     }
-    
+
     .controles-usuario {
         flex-direction: column;
         width: 100%;
         gap: 15px;
     }
-    
+
     .formulario-busqueda {
         width: 100%;
     }
-    
+
     .formulario-busqueda input {
         width: 100% !important;
     }
-    
+
     .contenedor-caracteristicas {
         flex-direction: column;
         align-items: flex-start;

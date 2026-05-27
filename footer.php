@@ -12,15 +12,15 @@
                     <span class="lema-logo">VINILOS & CDS</span>
                 </div>
             </a>
-            <p class="lema-marca">Música que se siente. Colecciones que perduran.</p>
+            <p class="lema-marca">Musica que se siente. Colecciones que perduran.</p>
         </div>
 
        
         <div class="columna-pie">
-            <h4>INFORMACIÓN</h4>
+            <h4>INFORMACION</h4>
             <ul class="enlaces-pie">
                 <li><a href="#">Sobre nosotros</a></li>
-                <li><a href="#">Envíos y entregas</a></li>
+                <li><a href="#">Envios y entregas</a></li>
                 <li><a href="#">Cambios y devoluciones</a></li>
                 <li><a href="admin.php">subir cancion guiño* guiño*</a></li>
             </ul>
@@ -32,7 +32,7 @@
                 <li><a href="cuenta.php">Mi perfil</a></li>
                 <li><a href="#">Mis pedidos</a></li>
                 <li><a href="#">Lista de deseos</a></li>
-                <li><a href="cuenta.php?logout=1">Cerrar sesión</a></li>
+                <li><a href="cuenta.php?logout=1">Cerrar sesion</a></li>
             </ul>
         </div>
 
@@ -40,16 +40,16 @@
             <h4>AYUDA</h4>
             <ul class="enlaces-pie">
                 <li><a href="#">Contacto</a></li>
-                <li><a href="#">Políticas de privacidad</a></li>
-                <li><a href="#">Términos y condiciones</a></li>
+                <li><a href="#">Politicas de privacidad</a></li>
+                <li><a href="#">Terminos y condiciones</a></li>
             </ul>
         </div>
 
         <div class="columna-pie">
-            <h4>SUSCRÍBETE A NUESTRO NEWSLETTER</h4>
+            <h4>SUSCRIBETE A NUESTRO NEWSLETTER</h4>
             <p class="texto-boletin">Recibe novedades, lanzamientos y ofertas exclusivas.</p>
             <form action="#" method="POST" class="formulario-boletin">
-                <input type="email" placeholder="Tu correo electrónico" required>
+                <input type="email" placeholder="Tu correo electronico" required>
                 <button type="submit" class="boton-suscribirse">SUSCRIBIRME</button>
             </form>
         </div>

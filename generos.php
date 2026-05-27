@@ -1,34 +1,34 @@
 <?php
-// 1. Buscamos de forma segura el archivo db.php en la raíz del proyecto
+// 1. Buscamos de forma segura el archivo db.php en la raiz del proyecto
 if (file_exists('db.php')) {
     include 'db.php';
 } elseif (file_exists('../db.php')) {
     include '../db.php';
 } else {
-    die("Error crítico: No se encontró el archivo db.php en el proyecto.");
+    die("Error critico: No se encontro el archivo db.php en el proyecto.");
 }
 
 // 2. Verificamos si la variable $pdo existe tras el include, si no, intentamos rescatarla
 if (!isset($pdo)) {
-    // Si tus compañeros metieron la conexión dentro de una función o clase,
-    // o si el archivo db.php usa otra variable global, creamos un respaldo aquí.
+    // Si tus compañeros metieron la conexion dentro de una funcion o clase,
+    // o si el archivo db.php usa otra variable global, creamos un respaldo aqui.
     if (isset($conn)) { $pdo = $conn; }
     elseif (isset($conexion)) { $pdo = $conexion; }
     elseif (isset($db_connect)) { $pdo = $db_connect; }
 }
 
 // 3. Hacemos la consulta usando el formato PDO seguro
-$generos = []; // Inicializamos vacío por seguridad
+$generos = []; // Inicializamos vacio por seguridad
 if (isset($pdo) && $pdo !== null) {
     try {
-        $query = "SELECT ID, Nombre_Género, Descripción, Portada FROM género_músical";
+        $query = "SELECT ID, Nombre_Genero, Descripcion, Portada FROM genero_musical";
         $stmt = $pdo->query($query); 
         $generos = $stmt->fetchAll();
     } catch (PDOException $e) {
         echo "<p style='color:red; background:white; padding:10px;'>Error en la consulta SQL: " . $e->getMessage() . "</p>";
     }
 } else {
-    echo "<p style='color:orange; background:white; padding:10px;'>Aviso: El archivo db.php se cargó, pero la variable de conexión \$pdo sigue vacía o inaccesible.</p>";
+    echo "<p style='color:orange; background:white; padding:10px;'>Aviso: El archivo db.php se cargo, pero la variable de conexion \$pdo sigue vacia o inaccesible.</p>";
 }
 ?>
 <!DOCTYPE html>
@@ -36,7 +36,7 @@ if (isset($pdo) && $pdo !== null) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Géneros Musicales - Rocky Records</title>
+    <title>Generos Musicales - Rocky Records</title>
     <link rel="stylesheet" href="css/estilos.css">
     <link rel="stylesheet" href="generos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -44,12 +44,12 @@ if (isset($pdo) && $pdo !== null) {
 <body>
 
     <?php 
-    // Insertamos el menú de navegación (si existe en la raíz)
+    // Insertamos el menu de navegacion (si existe en la raiz)
     if (file_exists('header.php')) { include 'header.php'; } 
     ?>
 
     <main class="generos-container">
-        <h1 class="main-title">GÉNEROS MUSICALES</h1>
+        <h1 class="main-title">GENEROS MUSICALES</h1>
         
         <section class="generos-grid">
             <?php 
@@ -59,24 +59,24 @@ if (isset($pdo) && $pdo !== null) {
             ?>
                     <a href="cds.php?genero_id=<?php echo $genero['ID']; ?>" class="genero-card">
                         <div class="genero-img-wrapper">
-                            <img src="<?php echo $genero['Portada']; ?>" alt="<?php echo $genero['Nombre_Género']; ?>">
+                            <img src="<?php echo $genero['Portada']; ?>" alt="<?php echo $genero['Nombre_Genero']; ?>">
                         </div>
                         <div class="genero-info">
-                            <h2><?php echo $genero['Nombre_Género']; ?></h2>
-                            <p><?php echo $genero['Descripción']; ?></p>
+                            <h2><?php echo $genero['Nombre_Genero']; ?></h2>
+                            <p><?php echo $genero['Descripcion']; ?></p>
                         </div>
                     </a>
             <?php 
                 endforeach; 
             else:
-                echo "<p class='error-msg'>No se pudieron cargar los géneros. Verifica que la tabla 'género_músical' tenga datos y que el nombre de la Base de Datos coincida.</p>";
+                echo "<p class='error-msg'>No se pudieron cargar los generos. Verifica que la tabla 'genero_musical' tenga datos y que el nombre de la Base de Datos coincida.</p>";
             endif;
             ?>
         </section>
     </main>
 
     <?php 
-    // Insertamos el pie de página (si existe en la raíz)
+    // Insertamos el pie de pagina (si existe en la raiz)
     if (file_exists('footer.php')) { include 'footer.php'; } 
     ?>
 
