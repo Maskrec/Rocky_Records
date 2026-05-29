@@ -1,8 +1,8 @@
 <?php
-include 'db.php';
+include '../includes/db.php';
 
 if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
+    header('Location: ../login.php');
     exit;
 }
 
@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $session_id = session_id();
 
     if ($direccion === '') {
-        header('Location: carrito.php');
+        header('Location: ../carrito.php');
         exit;
     }
 
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $clear_cart = $pdo->prepare("DELETE FROM carrito WHERE session_id = ?");
             $clear_cart->execute([$session_id]);
 
-            header('Location: ticket.php?pedido_id=' . $pedido_id . '&direccion=' . urlencode($direccion));
+            header('Location: ../ticket.php?pedido_id=' . $pedido_id . '&direccion=' . urlencode($direccion));
             exit;
         }
     } catch (Exception $e) {
@@ -54,5 +54,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-header('Location: carrito.php');
+header('Location: ../carrito.php');
 exit;
+?>

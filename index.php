@@ -1,4 +1,4 @@
-<?php include 'db.php'; ?>
+<?php include 'includes/db.php'; ?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <?php include 'header.php'; ?>
+    <?php include 'includes/header.php'; ?>
 
     <!-- Seccion Hero -->
     <section class="seccion-hero">
@@ -131,7 +131,7 @@
                         <div class="pie-tarjeta">
                             <span class="etiqueta-precio">$<?php echo number_format($precio_final, 0); ?> MXN</span>
 
-                            <form action="agregar_carrito.php" method="POST" style="margin:0;">
+                            <form action="actions/agregar_carrito.php" method="POST" style="margin:0;">
                                 <input type="hidden" name="id_producto" value="<?php echo $row['id']; ?>">
                                 <input type="hidden" name="cantidad" value="1">
                                 <button type="submit" class="boton-agregar-carrito" title="Agregar al carrito">
@@ -146,7 +146,7 @@
 
     </main>
 
-    <?php include 'footer.php'; ?>
+    <?php include 'includes/footer.php'; ?>
 
     <!-- SECCION: SCRIPT DE AUDIO REPRODUCTOR -->
     <script>

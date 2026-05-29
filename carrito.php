@@ -1,5 +1,5 @@
 <?php 
-include 'db.php'; 
+include 'includes/db.php'; 
 
 if (isset($_GET['eliminar_id'])) {
     try {
@@ -45,7 +45,7 @@ if (isset($_GET['eliminar_id'])) {
     </style>
 </head>
 <body>
-    <?php include 'header.php'; ?>
+    <?php include 'includes/header.php'; ?>
 
     <main class="contenedor-carrito" style="max-width: 1200px; margin: 40px auto; padding: 0 20px; min-height: 70vh;">
         <h1 style="font-family: var(--fuente-serif); border-bottom: 2px solid var(--color-borde); padding-bottom: 10px; margin-bottom: 30px; text-transform: uppercase;">Mi Carrito</h1>
@@ -99,7 +99,7 @@ if (isset($_GET['eliminar_id'])) {
                 $total_final = $subtotal_productos + $costo_envio;
                 ?>
                 
-                <form action="procesar_pago.php" method="POST">
+                <form action="actions/procesar_pago.php" method="POST">
                     <div class="desglose-pago">
                         <h3 style="font-family: var(--fuente-sans); border-bottom: 1px solid var(--color-borde); padding-bottom: 6px; margin-bottom: 15px; text-transform: uppercase; font-size: 14px;">Detalles de la Compra</h3>
                         
@@ -149,6 +149,6 @@ if (isset($_GET['eliminar_id'])) {
         </div>
     </main>
 
-    <?php include 'footer.php'; ?>
+    <?php include 'includes/footer.php'; ?>
 </body>
 </html>

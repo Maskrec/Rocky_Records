@@ -1,5 +1,5 @@
 <?php
-include 'db.php';
+include 'includes/db.php';
 
 try {
     $stmt_check = $pdo->prepare("SELECT id FROM usuarios WHERE nombre = ? OR email = ?");
@@ -218,7 +218,7 @@ if (isset($_POST['login'])) {
     </style>
 </head>
 <body>
-    <?php include 'header.php'; ?>
+    <?php include 'includes/header.php'; ?>
 
     <main class="contenedor-seccion">
         <h1 style="text-align:center; font-family: var(--fuente-serif); margin-bottom: 30px;">MI CUENTA</h1>
@@ -278,6 +278,6 @@ if (isset($_POST['login'])) {
         </div>
     </main>
 
-    <?php include 'footer.php'; ?>
+    <?php include 'includes/footer.php'; ?>
 </body>
 </html>

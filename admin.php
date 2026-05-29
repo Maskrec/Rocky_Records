@@ -1,5 +1,5 @@
 <?php
-include 'db.php';
+include 'includes/db.php';
 
 // Validar que el usuario sea
 if (!isset($_SESSION['user_id']) || $_SESSION['rol'] !== 'admin') {
@@ -213,7 +213,7 @@ if (isset($_GET['editar_id'])) {
 </head>
 
 <body>
-    <?php include 'header.php'; ?>
+    <?php include 'includes/header.php'; ?>
 
     <main class="contenedor-seccion">
         <div class="contenedor-admin">
@@ -237,7 +237,7 @@ if (isset($_GET['editar_id'])) {
             <?php endif; ?>
 
             <form
-                action="guardar_producto.php<?php echo $es_edicion ? '?action=edit&id=' . $prod_edit['id'] : '?action=add'; ?>"
+                action="actions/guardar_producto.php<?php echo $es_edicion ? '?action=edit&id=' . $prod_edit['id'] : '?action=add'; ?>"
                 method="POST" enctype="multipart/form-data" class="form-admin">
                 <div class="form-grupo">
                     <label for="titulo">Titulo del album</label>
@@ -403,7 +403,7 @@ if (isset($_GET['editar_id'])) {
         </div>
     </main>
 
-    <?php include 'footer.php'; ?>
+    <?php include 'includes/footer.php'; ?>
 </body>
 
 </html>

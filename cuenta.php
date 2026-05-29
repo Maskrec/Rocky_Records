@@ -1,5 +1,5 @@
 <?php
-include 'db.php';
+include 'includes/db.php';
 
 if (isset($_GET['logout'])) {
     session_destroy();
@@ -24,7 +24,7 @@ $user_id = $_SESSION['user_id'];
 </head>
 
 <body>
-    <?php include 'header.php'; ?>
+    <?php include 'includes/header.php'; ?>
 
     <main class="contenedor-seccion" style="max-width: 1000px; margin: 40px auto; min-height: 70vh;">
         <div
@@ -110,7 +110,7 @@ $user_id = $_SESSION['user_id'];
         </section>
     </main>
 
-    <?php include 'footer.php'; ?>
+    <?php include 'includes/footer.php'; ?>
 </body>
 
 </html>

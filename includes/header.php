@@ -1,6 +1,6 @@
 <?php
 if (!isset($pdo)) {
-    include_once 'db.php';
+    include_once __DIR__ . '/db.php';
 }
 
 $cant_items_carrito = 0;

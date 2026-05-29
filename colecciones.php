@@ -3,10 +3,10 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-if (file_exists('db.php')) {
-    include 'db.php';
-} elseif (file_exists('../db.php')) {
-    include '../db.php';
+if (file_exists('includes/db.php')) {
+    include 'includes/db.php';
+} elseif (file_exists('../includes/db.php')) {
+    include '../includes/db.php';
 } else {
     die("Error critico: No se encontro el archivo db.php en el proyecto.");
 }
@@ -41,7 +41,7 @@ if (isset($pdo)) {
 </head>
 <body>
 
-    <?php include 'header.php'; ?>
+    <?php include 'includes/header.php'; ?>
 
     <main class="colecciones-container">
         <h1 class="main-title">COLECCIONES ESPECIALES</h1>
@@ -91,7 +91,7 @@ if (isset($pdo)) {
     </main>
 
     <?php 
-    if (file_exists('footer.php')) { include 'footer.php'; } 
+    if (file_exists('includes/footer.php')) { include 'includes/footer.php'; } 
     ?>
 
 </body>

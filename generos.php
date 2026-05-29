@@ -1,8 +1,8 @@
 <?php
-if (file_exists('db.php')) {
-    include 'db.php';
-} elseif (file_exists('../db.php')) {
-    include '../db.php';
+if (file_exists('includes/db.php')) {
+    include 'includes/db.php';
+} elseif (file_exists('../includes/db.php')) {
+    include '../includes/db.php';
 } else {
     die("Error critico: No se encontro el archivo db.php en el proyecto.");
 }
@@ -33,13 +33,13 @@ if (isset($pdo) && $pdo !== null) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generos Musicales - Rocky Records</title>
     <link rel="stylesheet" href="css/estilos.css">
-    <link rel="stylesheet" href="generos.css">
+    <link rel="stylesheet" href="css/generos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
     <?php 
-    if (file_exists('header.php')) { include 'header.php'; } 
+    if (file_exists('includes/header.php')) { include 'includes/header.php'; } 
     ?>
 
     <main class="generos-container">
@@ -69,7 +69,7 @@ if (isset($pdo) && $pdo !== null) {
     </main>
 
     <?php 
-    if (file_exists('footer.php')) { include 'footer.php'; } 
+    if (file_exists('includes/footer.php')) { include 'includes/footer.php'; } 
     ?>
 
 </body>

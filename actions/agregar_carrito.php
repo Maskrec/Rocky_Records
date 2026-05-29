@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'db.php';
+include '../includes/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $producto_id = isset($_POST['id_producto']) ? (int)$_POST['id_producto'] : 0;
@@ -21,10 +21,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $insert->execute([$session_id, $producto_id, $cantidad]);
         }
         
-        header('Location: carrito.php');
+        header('Location: ../carrito.php');
         exit;
     }
 }
 
-header('Location: index.php');
+header('Location: ../index.php');
 exit;
+?>
