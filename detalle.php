@@ -23,7 +23,6 @@ $format_label = $is_cd ? 'CD' : 'VINYL';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($producto['titulo']); ?> - Rocky Records</title>
-    <!-- Cache busting version parameter for stylesheets -->
     <link rel="stylesheet" href="css/estilos.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="css/detalle.css?v=<?php echo time(); ?>">
 </head>
@@ -37,12 +36,12 @@ $format_label = $is_cd ? 'CD' : 'VINYL';
         </div>
 
         <div class="detalle-album-grid">
-            <!-- Columna Izquierda: Tocadiscos Realista -->
+            <!-- Columna Izquierda tcadisco -->
             <div class="columna-interactiva">
                 <div class="tocadiscos-caja">
                     <div class="base-tocadiscos">
                         <div class="plato-giratorio">
-                            <!-- El disco interactivo (CD o Vinilo) montado sobre el plato -->
+                            <!-- disco sobre el plato -->
                             <div class="disco-interactivo <?php echo $disc_class; ?>" id="disco-soporte">
                                 <div class="etiqueta-disco"
                                     style="background-image: url('uploads/portadas/<?php echo htmlspecialchars($producto['imagen_url']); ?>'); background-size: cover; background-position: center;">
@@ -128,6 +127,9 @@ $format_label = $is_cd ? 'CD' : 'VINYL';
                         <audio id="audio-demo" preload="none">
                             <source src="uploads/demos/<?php echo htmlspecialchars($producto['demo_url']); ?>"
                                 type="audio/mpeg">
+                        </audio>
+                        <audio id="audio-efecto-aguja" preload="auto">
+                            <source src="uploads/Sound Effect.mp3" type="audio/mpeg">
                         </audio>
                     </div>
                 <?php endif; ?>
@@ -229,6 +231,7 @@ $format_label = $is_cd ? 'CD' : 'VINYL';
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const audio = document.getElementById('audio-demo');
+            const audioEfecto = document.getElementById('audio-efecto-aguja');
             const playPauseBtn = document.getElementById('btn-play-pause');
             const progresoRelleno = document.getElementById('progreso-relleno');
             const tiempoRep = document.getElementById('tiempo-reproduccion');
@@ -244,14 +247,25 @@ $format_label = $is_cd ? 'CD' : 'VINYL';
             let dataArray = null;
             let animationFrameId = null;
 
+            // Control de intro de aguja
+            let introTimeout = null;
+            let isPlayingIntro = false;
+
             function initAnalyser() {
                 try {
                     const AudioContext = window.AudioContext || window.webkitAudioContext;
                     audioCtx = new AudioContext();
                     analyser = audioCtx.createAnalyser();
-                    analyser.fftSize = 64; // Pequeño para respuesta ágil y rápida
+                    analyser.fftSize = 64; // sirve para detectar frecuencias y que el medidor se mueva
                     source = audioCtx.createMediaElementSource(audio);
                     source.connect(analyser);
+
+
+                    if (audioEfecto) {
+                        const sourceEfecto = audioCtx.createMediaElementSource(audioEfecto);
+                        sourceEfecto.connect(analyser);
+                    }
+
                     analyser.connect(audioCtx.destination);
                     dataArray = new Uint8Array(analyser.frequencyBinCount);
                 } catch (e) {
@@ -260,7 +274,9 @@ $format_label = $is_cd ? 'CD' : 'VINYL';
             }
 
             function updateVUMeter() {
-                if (audio && !audio.paused && !audio.ended) {
+                // El VU baila si está sonando la canción principal O el sonido de estática
+                const isPlaying = (audio && !audio.paused && !audio.ended) || (audioEfecto && !audioEfecto.paused && !audioEfecto.ended);
+                if (isPlaying) {
                     let volL = 0;
                     let volR = 0;
 
@@ -272,19 +288,14 @@ $format_label = $is_cd ? 'CD' : 'VINYL';
                         }
                         const avg = sum / dataArray.length;
                         volL = (avg / 255) * 1.2;
-                        volR = (avg / 255) * 1.0 + Math.random() * 0.15; // Ligeras diferencias para efecto estéreo
-                    } else {
-                        // Simulación matemática muy realista con ruido armónico
-                        const t = Date.now();
-                        volL = 0.35 + Math.sin(t / 90) * 0.2 + Math.random() * 0.3;
-                        volR = 0.35 + Math.sin(t / 110) * 0.18 + Math.random() * 0.3;
+                        volR = (avg / 255) * 1.0 + Math.random() * 0.15;
                     }
 
-                    // Mapear a ángulos de rotación de la aguja (-45deg a 40deg)
+
                     const angleL = -45 + (volL * 85);
                     const angleR = -45 + (volR * 85);
 
-                    // Limitar rotación física
+
                     const clampedL = Math.max(-45, Math.min(40, angleL));
                     const clampedR = Math.max(-45, Math.min(40, angleR));
 
@@ -301,8 +312,7 @@ $format_label = $is_cd ? 'CD' : 'VINYL';
                 if (needleIzq) needleIzq.style.transform = 'rotate(-45deg)';
                 if (needleDer) needleDer.style.transform = 'rotate(-45deg)';
             }
-
-            // Lógica del Selector de Edición Especial
+            //selector de colores del disco
             const swatches = document.querySelectorAll('.swatch');
             if (swatches.length > 0 && disco) {
                 swatches.forEach(swatch => {
@@ -312,13 +322,13 @@ $format_label = $is_cd ? 'CD' : 'VINYL';
 
                         const color = swatch.dataset.color;
 
-                        // Limpiar clases de color previas
+
                         disco.classList.remove(
                             'color-orange', 'color-blue', 'color-red',
                             'color-gold', 'color-purple'
                         );
 
-                        // Añadir la nueva clase si no es la estándar (black o silver)
+
                         if (color !== 'black' && color !== 'silver') {
                             disco.classList.add(`color-${color}`);
                         }
@@ -330,8 +340,9 @@ $format_label = $is_cd ? 'CD' : 'VINYL';
                 const playIcon = playPauseBtn.querySelector('.icono-play');
                 const pauseIcon = playPauseBtn.querySelector('.icono-pause');
 
+
                 playPauseBtn.addEventListener('click', () => {
-                    // Inicializar el analizador de audio en la primera interacción del usuario
+
                     if (!audioCtx) {
                         initAnalyser();
                     }
@@ -339,10 +350,63 @@ $format_label = $is_cd ? 'CD' : 'VINYL';
                         audioCtx.resume();
                     }
 
-                    if (audio.paused) {
-                        audio.play();
+                    const isCurrentlyPlaying = (!audio.paused && !audio.ended) || (audioEfecto && !audioEfecto.paused && !audioEfecto.ended);
+
+                    if (!isCurrentlyPlaying) {
+                        // Reproducir
+                        playIcon.style.display = 'none';
+                        pauseIcon.style.display = 'inline';
+
+                        brazo.classList.add('brazo-reproduciendo');
+                        disco.classList.add('girando-reproduccion');
+
+                        updateVUMeter();
+
+                        if (audio.currentTime === 0) {
+                            // Si está al inicio, se reproduce el intro por 5 segundos antes de la canción
+                            isPlayingIntro = true;
+                            if (audioEfecto) {
+                                audioEfecto.currentTime = 0;
+                                audioEfecto.play();
+                            }
+
+                            introTimeout = setTimeout(() => {
+                                isPlayingIntro = false;
+                                if (audioEfecto) {
+                                    audioEfecto.pause();
+                                    audioEfecto.currentTime = 0;
+                                }
+                                audio.play();
+                            }, 5000);
+                        } else {
+                            // Si reanuda desde la mitad, reproduce la canción directamente
+                            isPlayingIntro = false;
+                            audio.play();
+                        }
                     } else {
+                        // Pausar
+                        if (introTimeout) {
+                            clearTimeout(introTimeout);
+                            introTimeout = null;
+                        }
+                        isPlayingIntro = false;
+
                         audio.pause();
+                        if (audioEfecto) {
+                            audioEfecto.pause();
+                        }
+
+                        playIcon.style.display = 'inline';
+                        pauseIcon.style.display = 'none';
+
+                        brazo.classList.remove('brazo-reproduciendo');
+                        disco.classList.remove('girando-reproduccion');
+
+                        if (animationFrameId) {
+                            cancelAnimationFrame(animationFrameId);
+                            animationFrameId = null;
+                        }
+                        resetNeedles();
                     }
                 });
 
@@ -353,21 +417,25 @@ $format_label = $is_cd ? 'CD' : 'VINYL';
                     brazo.classList.add('brazo-reproduciendo');
                     disco.classList.add('girando-reproduccion');
 
-                    // Iniciar animación del VU Meter
                     updateVUMeter();
                 });
 
                 audio.addEventListener('pause', () => {
-                    playIcon.style.display = 'inline';
-                    pauseIcon.style.display = 'none';
 
-                    brazo.classList.remove('brazo-reproduciendo');
-                    disco.classList.remove('girando-reproduccion');
+                    const isAnyPlaying = (!audio.paused && !audio.ended) || (audioEfecto && !audioEfecto.paused && !audioEfecto.ended);
+                    if (!isAnyPlaying && !isPlayingIntro) {
+                        playIcon.style.display = 'inline';
+                        pauseIcon.style.display = 'none';
 
-                    if (animationFrameId) {
-                        cancelAnimationFrame(animationFrameId);
+                        brazo.classList.remove('brazo-reproduciendo');
+                        disco.classList.remove('girando-reproduccion');
+
+                        if (animationFrameId) {
+                            cancelAnimationFrame(animationFrameId);
+                            animationFrameId = null;
+                        }
+                        resetNeedles();
                     }
-                    resetNeedles();
                 });
 
                 audio.addEventListener('ended', () => {
@@ -378,8 +446,14 @@ $format_label = $is_cd ? 'CD' : 'VINYL';
                     disco.classList.remove('girando-reproduccion');
                     progresoRelleno.style.width = '0%';
 
+                    if (audioEfecto) {
+                        audioEfecto.pause();
+                        audioEfecto.currentTime = 0;
+                    }
+
                     if (animationFrameId) {
                         cancelAnimationFrame(animationFrameId);
+                        animationFrameId = null;
                     }
                     resetNeedles();
                 });

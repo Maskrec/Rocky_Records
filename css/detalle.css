@@ -1,7 +1,3 @@
-/* ==========================================================================
-   ROCKY RECORDS - DETALLE DE ALBUM (VISTA PREMIUM REDISEÑADA)
-   ========================================================================== */
-
 .enlace-retorno {
     margin-bottom: 25px;
 }
@@ -19,7 +15,7 @@
     color: var(--color-naranja);
 }
 
-/* Grid Principal */
+/* tablero principal */
 .detalle-album-grid {
     display: grid;
     grid-template-columns: 2fr 1.2fr;
@@ -38,19 +34,19 @@
 /* Columna Izquierda: Tocadiscos Realista */
 .columna-interactiva {
     display: flex;
-    flex-direction: column; /* Apila el tocadiscos y el reproductor verticalmente */
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 20px; /* Separación entre el tocadiscos y el reproductor */
+    gap: 20px;
 }
 
-/* Efecto sticky en desktop para que la columna izquierda siga el scroll */
+/* efecto sticky enpara que la columna izquierda siga el scroll */
 @media (min-width: 1025px) {
     .columna-interactiva {
         position: sticky;
-        top: 95px; /* Libera el header que es sticky y tiene z-index: 1000 */
+        top: 95px;
         z-index: 10;
-        align-self: start; /* Previene que el navegador estire verticalmente el contenedor */
+        align-self: start;
     }
 }
 
@@ -75,7 +71,7 @@
     box-sizing: border-box;
 }
 
-/* Detalles metálicos en las esquinas de la madera */
+/* Detalle metálico  */
 .base-tocadiscos::before {
     content: '';
     position: absolute;
@@ -104,7 +100,7 @@
     align-items: center;
 }
 
-/* El brazo del tocadiscos (Ubicado fuera del plato giratorio, en la esquina de la base) */
+/* El brazo del tocadiscos  */
 .brazo-aguja {
     position: absolute;
     top: 15px;
@@ -182,7 +178,7 @@
     background-color: #ef4444;
 }
 
-/* Disco Interactivo (Vinilo / CD en el plato) */
+
 .disco-interactivo {
     position: absolute;
     width: 90%;
@@ -193,7 +189,7 @@
     transition: transform 0.5s ease;
 }
 
-/* Animación de rotación continua al reproducir */
+/*  rotación continua al reproducir */
 .disco-interactivo.girando-reproduccion {
     animation: rotacion-plato 2.5s linear infinite;
 }
@@ -470,7 +466,8 @@
     border-radius: 8px;
     padding: 12px 18px;
     width: 100%;
-    max-width: 480px; /* Mismo ancho máximo que el tocadiscos para simetría */
+    max-width: 480px;
+    /* Mismo ancho máximo que el tocadiscos para simetría */
     box-sizing: border-box;
 }
 
@@ -599,11 +596,14 @@
     position: absolute;
     bottom: 25px;
     left: 25px;
-    z-index: 30; /* Por encima del plato giratorio */
+    z-index: 30;
+    /* Por encima del plato giratorio */
     display: flex;
     gap: 6px;
-    background: #1c1510; /* Metalizado oscuro */
-    border: 2px solid #573f2c; /* Marco a juego con la madera */
+    background: #1c1510;
+    /* Metalizado oscuro */
+    border: 2px solid #573f2c;
+    /* Marco a juego con la madera */
     border-radius: 6px;
     padding: 5px 8px;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6), inset 0 1px 3px rgba(255, 255, 255, 0.1);
@@ -612,7 +612,8 @@
 .vu-pantalla {
     width: 52px;
     height: 32px;
-    background: radial-gradient(circle at center, #f59e0b 0%, #b45309 100%); /* Brillo ámbar vintage */
+    background: radial-gradient(circle at center, #f59e0b 0%, #b45309 100%);
+    /* Brillo ámbar vintage */
     border: 1px solid #000;
     border-radius: 3px;
     position: relative;
@@ -637,8 +638,10 @@
     background-color: rgba(0, 0, 0, 0.4);
 }
 
-.vu-tick:nth-child(4), .vu-tick:nth-child(5) {
-    background-color: #ef4444; /* Zona roja crítica */
+.vu-tick:nth-child(4),
+.vu-tick:nth-child(5) {
+    background-color: #ef4444;
+    /* Zona roja crítica */
 }
 
 .vu-aguja {
@@ -649,7 +652,8 @@
     height: 24px;
     background-color: #111;
     transform-origin: bottom center;
-    transform: rotate(-45deg); /* Inicio de aguja (silencio) */
+    transform: rotate(-45deg);
+    /* Inicio de aguja (silencio) */
     transition: transform 0.08s cubic-bezier(0.1, 0.8, 0.3, 1);
     box-shadow: 0 0 1px rgba(0, 0, 0, 0.4);
 }
@@ -714,10 +718,21 @@
 }
 
 /* Colores de Vinilo Especiales */
-.swatch.vinyl-black { background-color: #111; }
-.swatch.vinyl-orange { background-color: #f97316; }
-.swatch.vinyl-blue { background-color: #06b6d4; }
-.swatch.vinyl-red { background-color: #ef4444; }
+.swatch.vinyl-black {
+    background-color: #111;
+}
+
+.swatch.vinyl-orange {
+    background-color: #f97316;
+}
+
+.swatch.vinyl-blue {
+    background-color: #06b6d4;
+}
+
+.swatch.vinyl-red {
+    background-color: #ef4444;
+}
 
 .disco-interactivo.vinyl.color-orange {
     background: radial-gradient(circle, #fb923c 0%, #ea580c 40%, #c2410c 70%, #451a03 100%) !important;
@@ -735,10 +750,21 @@
 }
 
 /* Colores de CD Especiales */
-.swatch.cd-silver { background: linear-gradient(135deg, #e2e8f0, #94a3b8); }
-.swatch.cd-gold { background: linear-gradient(135deg, #fbbf24, #d97706); }
-.swatch.cd-blue { background: linear-gradient(135deg, #22d3ee, #0891b2); }
-.swatch.cd-purple { background: linear-gradient(135deg, #c084fc, #7e22ce); }
+.swatch.cd-silver {
+    background: linear-gradient(135deg, #e2e8f0, #94a3b8);
+}
+
+.swatch.cd-gold {
+    background: linear-gradient(135deg, #fbbf24, #d97706);
+}
+
+.swatch.cd-blue {
+    background: linear-gradient(135deg, #22d3ee, #0891b2);
+}
+
+.swatch.cd-purple {
+    background: linear-gradient(135deg, #c084fc, #7e22ce);
+}
 
 .disco-interactivo.cd.color-gold {
     background: conic-gradient(from 0deg, #fef3c7 0%, #fbbf24 15%, #d97706 30%, #fbbf24 45%, #fef3c7 60%, #d97706 75%, #fef3c7 90%, #fef3c7 100%) !important;
