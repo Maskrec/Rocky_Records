@@ -1,0 +1,756 @@
+/* ==========================================================================
+   ROCKY RECORDS - DETALLE DE ALBUM (VISTA PREMIUM REDISEÑADA)
+   ========================================================================== */
+
+.enlace-retorno {
+    margin-bottom: 25px;
+}
+
+.btn-regresar {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--texto-atenuado);
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: color 0.3s;
+}
+
+.btn-regresar:hover {
+    color: var(--color-naranja);
+}
+
+/* Grid Principal */
+.detalle-album-grid {
+    display: grid;
+    grid-template-columns: 2fr 1.2fr;
+    gap: 40px;
+    align-items: start;
+    margin-bottom: 50px;
+}
+
+@media (max-width: 1024px) {
+    .detalle-album-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+}
+
+/* Columna Izquierda: Tocadiscos Realista */
+.columna-interactiva {
+    display: flex;
+    flex-direction: column; /* Apila el tocadiscos y el reproductor verticalmente */
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Separación entre el tocadiscos y el reproductor */
+}
+
+/* Efecto sticky en desktop para que la columna izquierda siga el scroll */
+@media (min-width: 1025px) {
+    .columna-interactiva {
+        position: sticky;
+        top: 95px; /* Libera el header que es sticky y tiene z-index: 1000 */
+        z-index: 10;
+        align-self: start; /* Previene que el navegador estire verticalmente el contenedor */
+    }
+}
+
+.tocadiscos-caja {
+    width: 100%;
+    max-width: 480px;
+    aspect-ratio: 1 / 1;
+}
+
+.base-tocadiscos {
+    background: linear-gradient(135deg, #2c1d11 0%, #150e08 100%);
+    /* Acabado de madera oscura */
+    border: 12px solid #3d2a1b;
+    border-radius: 24px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5),
+        inset 0 4px 15px rgba(255, 255, 255, 0.1),
+        inset 0 -4px 15px rgba(0, 0, 0, 0.6);
+    width: 100%;
+    height: 100%;
+    padding: 25px;
+    position: relative;
+    box-sizing: border-box;
+}
+
+/* Detalles metálicos en las esquinas de la madera */
+.base-tocadiscos::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #e2e8f0 0%, #64748b 100%);
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* Plato giratorio */
+.plato-giratorio {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: radial-gradient(circle, #1a1a1a 0%, #0d0d0d 70%, #050505 100%);
+    border-radius: 50%;
+    border: 6px solid #222;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4),
+        inset 0 2px 8px rgba(0, 0, 0, 0.8),
+        0 0 0 4px rgba(255, 255, 255, 0.02);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* El brazo del tocadiscos (Ubicado fuera del plato giratorio, en la esquina de la base) */
+.brazo-aguja {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 80px;
+    height: 200px;
+    z-index: 25;
+    pointer-events: none;
+    transform-origin: 50px 30px;
+    transform: rotate(0deg);
+    transition: transform 1.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.brazo-reproduciendo {
+    transform: rotate(32deg) !important;
+}
+
+.pivote {
+    position: absolute;
+    top: 15px;
+    left: 35px;
+    width: 34px;
+    height: 34px;
+    background: radial-gradient(circle, #f1f5f9 0%, #94a3b8 70%, #475569 100%);
+    border: 3px solid #1e293b;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    z-index: 5;
+}
+
+.cuerpo-brazo {
+    position: absolute;
+    top: 30px;
+    left: 48px;
+    width: 6px;
+    height: 125px;
+    background: linear-gradient(to right, #e2e8f0, #94a3b8, #cbd5e1);
+    border-radius: 3px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+    transform-origin: top center;
+}
+
+.cuerpo-brazo::before {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: -4px;
+    width: 14px;
+    height: 20px;
+    background: linear-gradient(to right, #94a3b8, #475569);
+    border-radius: 2px;
+    transform: rotate(15deg);
+}
+
+.cabezal-aguja {
+    position: absolute;
+    bottom: 25px;
+    left: 38px;
+    width: 14px;
+    height: 28px;
+    background-color: #0f172a;
+    border: 1px solid #475569;
+    border-radius: 2px;
+    transform: rotate(10deg);
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.cabezal-aguja::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 6px;
+    width: 2px;
+    height: 6px;
+    background-color: #ef4444;
+}
+
+/* Disco Interactivo (Vinilo / CD en el plato) */
+.disco-interactivo {
+    position: absolute;
+    width: 90%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    z-index: 10;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+    transition: transform 0.5s ease;
+}
+
+/* Animación de rotación continua al reproducir */
+.disco-interactivo.girando-reproduccion {
+    animation: rotacion-plato 2.5s linear infinite;
+}
+
+@keyframes rotacion-plato {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Aspectos de Vinilo */
+.disco-interactivo.vinyl {
+    background: radial-gradient(circle, #383431 0%, #1c1a19 30%, #12100f 60%, #050404 100%);
+    border: 2px solid #000;
+}
+
+.disco-interactivo.vinyl::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 50%;
+    background: repeating-radial-gradient(circle, transparent, transparent 2px, rgba(255, 255, 255, 0.03) 2.5px, rgba(255, 255, 255, 0.03) 3px);
+    z-index: 3;
+}
+
+/* Aspectos de CD */
+.disco-interactivo.cd {
+    background: conic-gradient(from 0deg, #d3d7de 0%, #cbd0d8 15%, #eceef1 30%, #aab0b9 45%, #eceef1 60%, #cbd0d8 75%, #eceef1 90%, #d3d7de 100%);
+    border: 1px solid #b1b7c2;
+}
+
+.disco-interactivo.cd::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 50%;
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.1) 40%, rgba(255, 255, 255, 0) 70%);
+    z-index: 3;
+}
+
+.disco-interactivo .etiqueta-disco {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 32%;
+    height: 32%;
+    border-radius: 50%;
+    border: 2px solid #111;
+    z-index: 4;
+}
+
+.disco-interactivo.cd .etiqueta-disco {
+    background-color: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.disco-interactivo .centro-disco {
+    width: 25%;
+    height: 25%;
+    background-color: #1a1a1a;
+    border-radius: 50%;
+    border: 1.5px solid rgba(0, 0, 0, 0.6);
+    box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.8);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.disco-interactivo.cd .centro-disco {
+    width: 40%;
+    height: 40%;
+    background-color: #f1f5f9;
+    border: 1.5px solid rgba(0, 0, 0, 0.15);
+}
+
+/* Columna Derecha: Tarjeta de Información */
+.columna-informacion {
+    height: 100%;
+}
+
+.tarjeta-informacion {
+    background-color: var(--color-tarjeta);
+    background-image: url('textura-papel.jpg');
+    border: 1px solid var(--color-borde);
+    border-radius: 6px;
+    padding: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+}
+
+/* Contenedor del Estuche (Layout de Libro abierto) */
+.estuche-layout {
+    display: flex;
+    gap: 25px;
+    margin-bottom: 25px;
+}
+
+@media (max-width: 600px) {
+    .estuche-layout {
+        flex-direction: column;
+    }
+}
+
+.estuche-portada {
+    width: 150px;
+    height: 150px;
+    flex-shrink: 0;
+    border-radius: 4px;
+    box-shadow: 3px 5px 15px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.estuche-portada img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.estuche-detalles {
+    flex-grow: 1;
+}
+
+.detalle-formato {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: var(--texto-atenuado);
+    border: 1.5px solid var(--color-borde);
+    padding: 2px 8px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.detalle-formato.formato-vinilo {
+    color: var(--color-naranja);
+    border-color: var(--color-naranja);
+}
+
+.detalle-titulo {
+    font-family: var(--fuente-serif);
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--texto-oscuro);
+    line-height: 1.1;
+    margin-bottom: 5px;
+}
+
+.detalle-artista {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--texto-atenuado);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+}
+
+.detalle-meta {
+    border-top: 1px solid var(--color-borde);
+    border-bottom: 1px solid var(--color-borde);
+    padding: 10px 0;
+    margin-bottom: 20px;
+    font-size: 12px;
+    color: #4b5563;
+}
+
+.detalle-meta p {
+    margin: 4px 0;
+}
+
+.en-stock {
+    color: #0d9488;
+    font-weight: 700;
+}
+
+.sin-stock {
+    color: #ef4444;
+    font-weight: 700;
+}
+
+.detalle-precio-box {
+    margin-bottom: 20px;
+}
+
+.precio-val,
+.precio-oferta-val {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--color-naranja);
+}
+
+.precio-original-val {
+    font-size: 14px;
+    color: var(--texto-atenuado);
+    margin-left: 10px;
+    text-decoration: line-through;
+}
+
+.detalle-descripcion {
+    margin-bottom: 25px;
+}
+
+.detalle-descripcion h3,
+.detalle-tracklist h3 {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--texto-oscuro);
+    letter-spacing: 1px;
+    border-bottom: 1.5px solid var(--color-borde);
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.detalle-descripcion p {
+    font-size: 13px;
+    color: #4b5563;
+    line-height: 1.6;
+}
+
+/* Tracklist estilo contraportada física */
+.detalle-tracklist {
+    margin-bottom: 30px;
+    background-color: rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 6px;
+    padding: 15px;
+}
+
+.canciones-lista {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-family: var(--fuente-serif);
+    font-style: italic;
+    color: #374151;
+    font-size: 14px;
+}
+
+.canciones-lista li {
+    padding: 6px 0;
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+}
+
+.canciones-lista li:last-child {
+    border-bottom: none;
+}
+
+.sin-canciones {
+    font-size: 12px;
+    color: var(--texto-atenuado);
+    font-style: italic;
+}
+
+/* Reproductor Estilizado */
+.reproductor-estilizado {
+    background-color: #eae1d4;
+    background-image: url('textura-papel.jpg');
+    border: 1px solid var(--color-borde);
+    border-radius: 8px;
+    padding: 12px 18px;
+    width: 100%;
+    max-width: 480px; /* Mismo ancho máximo que el tocadiscos para simetría */
+    box-sizing: border-box;
+}
+
+.reproductor-estilizado h4 {
+    font-size: 9px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--texto-oscuro);
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.controles-reproductor {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn-play-pause {
+    background-color: var(--color-naranja);
+    color: white;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 6px rgba(194, 65, 12, 0.2);
+}
+
+.btn-play-pause:hover {
+    background-color: var(--color-naranja-hover);
+    transform: scale(1.05);
+}
+
+.progreso-barra {
+    flex-grow: 1;
+    height: 6px;
+    background-color: rgba(0, 0, 0, 0.08);
+    border-radius: 3px;
+    position: relative;
+    cursor: pointer;
+}
+
+.progreso-relleno {
+    height: 100%;
+    width: 0%;
+    background-color: var(--color-naranja);
+    border-radius: 3px;
+}
+
+.tiempo-reproduccion {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--texto-oscuro);
+    min-width: 30px;
+    text-align: right;
+}
+
+/* Compra */
+.form-compra {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.cantidad-selector {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.cantidad-selector label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--texto-atenuado);
+}
+
+.input-cantidad {
+    width: 50px;
+    padding: 6px;
+    border: 1px solid var(--color-borde);
+    border-radius: 4px;
+    font-family: var(--fuente-sans);
+    font-size: 13px;
+    text-align: center;
+    outline: none;
+}
+
+.btn-agregar-detalle {
+    flex-grow: 1;
+    background-color: var(--color-naranja);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-agregar-detalle:hover:not(:disabled) {
+    background-color: var(--color-naranja-hover);
+    box-shadow: 0 4px 10px rgba(194, 65, 12, 0.2);
+}
+
+.btn-agotado {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+}
+
+/* ==========================================================================
+   NUEVAS FUNCIONES: VU METER Y PERSONALIZADOR DE EDICIONES
+   ========================================================================== */
+
+/* VU Meter Analógico Retro en la madera del tocadiscos */
+.vu-meter-retro {
+    position: absolute;
+    bottom: 25px;
+    left: 25px;
+    z-index: 30; /* Por encima del plato giratorio */
+    display: flex;
+    gap: 6px;
+    background: #1c1510; /* Metalizado oscuro */
+    border: 2px solid #573f2c; /* Marco a juego con la madera */
+    border-radius: 6px;
+    padding: 5px 8px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6), inset 0 1px 3px rgba(255, 255, 255, 0.1);
+}
+
+.vu-pantalla {
+    width: 52px;
+    height: 32px;
+    background: radial-gradient(circle at center, #f59e0b 0%, #b45309 100%); /* Brillo ámbar vintage */
+    border: 1px solid #000;
+    border-radius: 3px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.6), 0 0 5px rgba(245, 158, 11, 0.4);
+}
+
+.vu-escala {
+    position: absolute;
+    top: 3px;
+    left: 4px;
+    right: 4px;
+    height: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    display: flex;
+    justify-content: space-between;
+}
+
+.vu-tick {
+    width: 1px;
+    height: 4px;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.vu-tick:nth-child(4), .vu-tick:nth-child(5) {
+    background-color: #ef4444; /* Zona roja crítica */
+}
+
+.vu-aguja {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 1px;
+    height: 24px;
+    background-color: #111;
+    transform-origin: bottom center;
+    transform: rotate(-45deg); /* Inicio de aguja (silencio) */
+    transition: transform 0.08s cubic-bezier(0.1, 0.8, 0.3, 1);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.4);
+}
+
+.vu-canal {
+    position: absolute;
+    bottom: 1px;
+    right: 3px;
+    font-size: 7px;
+    font-weight: 800;
+    color: rgba(0, 0, 0, 0.45);
+    font-family: var(--fuente-sans);
+}
+
+/* Selector de Ediciones Especiales (Swatches) */
+.selector-ediciones {
+    background-color: #eae1d4;
+    background-image: url('textura-papel.jpg');
+    border: 1px solid var(--color-borde);
+    border-radius: 8px;
+    padding: 12px 18px;
+    width: 100%;
+    max-width: 480px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.selector-titulo {
+    font-size: 9px;
+    font-weight: 800;
+    color: var(--texto-oscuro);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.opciones-color {
+    display: flex;
+    gap: 12px;
+}
+
+.swatch {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+    padding: 0;
+    outline: none;
+}
+
+.swatch:hover {
+    transform: scale(1.2);
+}
+
+.swatch.activo {
+    box-shadow: 0 0 0 2px var(--color-naranja);
+    transform: scale(1.1);
+}
+
+/* Colores de Vinilo Especiales */
+.swatch.vinyl-black { background-color: #111; }
+.swatch.vinyl-orange { background-color: #f97316; }
+.swatch.vinyl-blue { background-color: #06b6d4; }
+.swatch.vinyl-red { background-color: #ef4444; }
+
+.disco-interactivo.vinyl.color-orange {
+    background: radial-gradient(circle, #fb923c 0%, #ea580c 40%, #c2410c 70%, #451a03 100%) !important;
+    border-color: #451a03 !important;
+}
+
+.disco-interactivo.vinyl.color-blue {
+    background: radial-gradient(circle, #22d3ee 0%, #0891b2 40%, #0369a1 70%, #083344 100%) !important;
+    border-color: #083344 !important;
+}
+
+.disco-interactivo.vinyl.color-red {
+    background: radial-gradient(circle, #f87171 0%, #dc2626 40%, #991b1b 70%, #450a0a 100%) !important;
+    border-color: #450a0a !important;
+}
+
+/* Colores de CD Especiales */
+.swatch.cd-silver { background: linear-gradient(135deg, #e2e8f0, #94a3b8); }
+.swatch.cd-gold { background: linear-gradient(135deg, #fbbf24, #d97706); }
+.swatch.cd-blue { background: linear-gradient(135deg, #22d3ee, #0891b2); }
+.swatch.cd-purple { background: linear-gradient(135deg, #c084fc, #7e22ce); }
+
+.disco-interactivo.cd.color-gold {
+    background: conic-gradient(from 0deg, #fef3c7 0%, #fbbf24 15%, #d97706 30%, #fbbf24 45%, #fef3c7 60%, #d97706 75%, #fef3c7 90%, #fef3c7 100%) !important;
+    border-color: #b45309 !important;
+}
+
+.disco-interactivo.cd.color-blue {
+    background: conic-gradient(from 0deg, #ecfeff 0%, #22d3ee 15%, #0891b2 30%, #22d3ee 45%, #ecfeff 60%, #0891b2 75%, #ecfeff 90%, #ecfeff 100%) !important;
+    border-color: #0369a1 !important;
+}
+
+.disco-interactivo.cd.color-purple {
+    background: conic-gradient(from 0deg, #faf5ff 0%, #c084fc 15%, #7e22ce 30%, #c084fc 45%, #faf5ff 60%, #7e22ce 75%, #faf5ff 90%, #faf5ff 100%) !important;
+    border-color: #6b21a8 !important;
+}

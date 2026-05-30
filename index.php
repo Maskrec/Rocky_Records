@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rocky Records - La musica suena mejor en fisico</title>
-    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="css/estilos.css?v=<?php echo time(); ?>">
 </head>
 
 <body>
@@ -81,66 +81,76 @@
     <!-- Contenido Principal del Catalogo -->
     <main class="contenedor-seccion" id="catalogo">
         <!-- Seccion de Nuevos Lanzamientos -->
-        <section style="margin-bottom: 50px;">
+        <section style="margin-bottom: 50px; position: relative;">
             <div class="cabecera-seccion" id="nuevos-lanzamientos">
                 <h2>NUEVOS LANZAMIENTOS</h2>
-                <a href="viniles.php" class="enlace-ver-todos">VER TODOS &nbsp;➔</a>
+                <div class="controles-carrusel" style="display: flex; gap: 10px; align-items: center;">
+                    <button class="btn-carrusel btn-carrusel-izq" onclick="moverCarrusel(-1)">&#10094;</button>
+                    <button class="btn-carrusel btn-carrusel-der" onclick="moverCarrusel(1)">&#10095;</button>
+                </div>
             </div>
 
-            <div class="catalogo">
-                <?php
-                $stmt = $pdo->query("SELECT * FROM productos ORDER BY fecha_agregado DESC");
-                while ($row = $stmt->fetch()) {
-                    $precio_final = $row['precio_oferta'] ? $row['precio_oferta'] : $row['precio'];
-                    $is_cd = ($row['formato'] === 'CD');
-                    $disc_class = $is_cd ? 'cd' : 'vinyl';
-                    $format_label = $is_cd ? 'CD' : 'VINYL';
-                    ?>
-                    <div class="tarjeta-producto" id="card-<?php echo $row['id']; ?>">
-                        <div class="contenedor-funda">
-                            <span class="etiqueta-nuevo">NUEVO</span>
+            <div class="carrusel-contenedor">
+                <div class="carrusel-fila" id="carrusel-lanzamientos">
+                    <?php
+                    $stmt = $pdo->query("SELECT * FROM productos ORDER BY fecha_agregado DESC LIMIT 7");
+                    while ($row = $stmt->fetch()) {
+                        $precio_final = $row['precio_oferta'] ? $row['precio_oferta'] : $row['precio'];
+                        $is_cd = ($row['formato'] === 'CD');
+                        $disc_class = $is_cd ? 'cd' : 'vinyl';
+                        $format_label = $is_cd ? 'CD' : 'VINYL';
+                        ?>
+                        <div class="tarjeta-producto" id="card-<?php echo $row['id']; ?>">
+                            <div class="contenedor-funda">
+                                <span class="etiqueta-nuevo">NUEVO</span>
 
-                            <div class="contenedor-portada">
-                                <img src="uploads/portadas/<?php echo htmlspecialchars($row['imagen_url']); ?>"
-                                    alt="Portada de <?php echo htmlspecialchars($row['titulo']); ?>" class="imagen-portada">
-                            </div>
+                                <a href="detalle.php?id=<?php echo $row['id']; ?>" class="enlace-detalle">
+                                    <div class="contenedor-portada">
+                                        <img src="uploads/portadas/<?php echo htmlspecialchars($row['imagen_url']); ?>"
+                                            alt="Portada de <?php echo htmlspecialchars($row['titulo']); ?>" class="imagen-portada">
+                                    </div>
+                                </a>
 
-                            <div class="disco-soporte <?php echo $disc_class; ?>">
-                                <div class="etiqueta-disco"
-                                    style="background-image: url('uploads/portadas/<?php echo htmlspecialchars($row['imagen_url']); ?>'); background-size: cover; background-position: center;">
-                                    <div class="centro-disco"></div>
+                                <div class="disco-soporte <?php echo $disc_class; ?>">
+                                    <div class="etiqueta-disco"
+                                        style="background-image: url('uploads/portadas/<?php echo htmlspecialchars($row['imagen_url']); ?>'); background-size: cover; background-position: center;">
+                                        <div class="centro-disco"></div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <span class="artista-album"><?php echo htmlspecialchars($row['artista']); ?></span>
-                        <h3 class="titulo-album" title="<?php echo htmlspecialchars($row['titulo']); ?>">
-                            <?php echo htmlspecialchars($row['titulo']); ?></h3>
-                        <div>
-                            <span
-                                class="insignia-formato <?php echo !$is_cd ? 'formato-vinilo' : ''; ?>"><?php echo $format_label; ?></span>
-                        </div>
+                            <span class="artista-album"><?php echo htmlspecialchars($row['artista']); ?></span>
+                            <h3 class="titulo-album" title="<?php echo htmlspecialchars($row['titulo']); ?>">
+                                <a href="detalle.php?id=<?php echo $row['id']; ?>" style="text-decoration: none; color: inherit;">
+                                    <?php echo htmlspecialchars($row['titulo']); ?>
+                                </a>
+                            </h3>
+                            <div>
+                                <span
+                                    class="insignia-formato <?php echo !$is_cd ? 'formato-vinilo' : ''; ?>"><?php echo $format_label; ?></span>
+                            </div>
 
-                        <div class="reproductor">
-                            <audio controls controlsList="nodownload" preload="none">
-                                <source src="uploads/demos/<?php echo htmlspecialchars($row['demo_url']); ?>"
-                                    type="audio/mpeg">
-                            </audio>
-                        </div>
+                            <div class="reproductor">
+                                <audio controls controlsList="nodownload" preload="none">
+                                    <source src="uploads/demos/<?php echo htmlspecialchars($row['demo_url']); ?>"
+                                        type="audio/mpeg">
+                                </audio>
+                            </div>
 
-                        <div class="pie-tarjeta">
-                            <span class="etiqueta-precio">$<?php echo number_format($precio_final, 0); ?> MXN</span>
+                            <div class="pie-tarjeta">
+                                <span class="etiqueta-precio">$<?php echo number_format($precio_final, 0); ?> MXN</span>
 
-                            <form action="actions/agregar_carrito.php" method="POST" style="margin:0;">
-                                <input type="hidden" name="id_producto" value="<?php echo $row['id']; ?>">
-                                <input type="hidden" name="cantidad" value="1">
-                                <button type="submit" class="boton-agregar-carrito" title="Agregar al carrito">
-                                    <img src="img/svg/icono-carrito.svg" alt="Carrito" class="icono-carrito-btn">
-                                </button>
-                            </form>
+                                <form action="actions/agregar_carrito.php" method="POST" style="margin:0;">
+                                    <input type="hidden" name="id_producto" value="<?php echo $row['id']; ?>">
+                                    <input type="hidden" name="cantidad" value="1">
+                                    <button type="submit" class="boton-agregar-carrito" title="Agregar al carrito">
+                                        <img src="img/svg/icono-carrito.svg" alt="Carrito" class="icono-carrito-btn">
+                                    </button>
+                                </form>
+                            </div>
                         </div>
-                    </div>
-                <?php } ?>
+                    <?php } ?>
+                </div>
             </div>
         </section>
 
@@ -148,8 +158,53 @@
 
     <?php include 'includes/footer.php'; ?>
 
-    <!-- SECCION: SCRIPT DE AUDIO REPRODUCTOR -->
+    <!-- SECCION: SCRIPT DE AUDIO REPRODUCTOR Y CARRUSEL -->
     <script>
+        let indexCarrusel = 0;
+        function moverCarrusel(direccion) {
+            const fila = document.getElementById('carrusel-lanzamientos');
+            if (!fila) return;
+            const totalTarjetas = fila.children.length;
+            if (totalTarjetas === 0) return;
+            
+            const tarjetaWidth = fila.children[0].offsetWidth;
+            const gap = 25;
+            const paso = tarjetaWidth + gap;
+            
+            const contenedorWidth = fila.parentElement.offsetWidth;
+            const totalWidth = (tarjetaWidth * totalTarjetas) + (gap * (totalTarjetas - 1));
+            
+            const maxScroll = totalWidth - contenedorWidth;
+            if (maxScroll <= 0) {
+                fila.style.transform = 'translateX(0px)';
+                indexCarrusel = 0;
+                return;
+            }
+            
+            const maxPasos = Math.ceil(maxScroll / paso);
+            
+            indexCarrusel += direccion;
+            if (indexCarrusel < 0) {
+                indexCarrusel = maxPasos;
+            } else if (indexCarrusel > maxPasos) {
+                indexCarrusel = 0;
+            }
+            
+            let offset = -indexCarrusel * paso;
+            if (Math.abs(offset) > maxScroll) {
+                offset = -maxScroll;
+            }
+            fila.style.transform = `translateX(${offset}px)`;
+        }
+
+        window.addEventListener('resize', () => {
+            const fila = document.getElementById('carrusel-lanzamientos');
+            if (fila) {
+                fila.style.transform = 'translateX(0px)';
+                indexCarrusel = 0;
+            }
+        });
+
         document.addEventListener('DOMContentLoaded', () => {
             const reproductores = document.querySelectorAll('.reproductor audio');
 

@@ -18,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $precio_oferta = !empty($_POST['precio_oferta']) ? $_POST['precio_oferta'] : NULL;
     $stock = $_POST['stock'] ?? 0;
     $descripcion = $_POST['descripcion'] ?? '';
+    $detalles = $_POST['detalles'] ?? '';
 
     if ($action === 'edit' && $id > 0) {
         try {
@@ -52,9 +53,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
             }
 
-            $sql = "UPDATE productos SET titulo = ?, artista = ?, formato = ?, genero = ?, Fecha_Publicacion = ?, precio = ?, precio_oferta = ?, stock = ?, imagen_url = ?, demo_url = ?, descripcion = ? WHERE id = ?";
+            $sql = "UPDATE productos SET titulo = ?, artista = ?, formato = ?, genero = ?, Fecha_Publicacion = ?, precio = ?, precio_oferta = ?, stock = ?, imagen_url = ?, demo_url = ?, descripcion = ?, detalles = ? WHERE id = ?";
             $stmt = $pdo->prepare($sql);
-            $stmt->execute([$titulo, $artista, $formato, $genero, $fecha_publicacion, $precio, $precio_oferta, $stock, $img_nombre, $audio_nombre, $descripcion, $id]);
+            $stmt->execute([$titulo, $artista, $formato, $genero, $fecha_publicacion, $precio, $precio_oferta, $stock, $img_nombre, $audio_nombre, $descripcion, $detalles, $id]);
 
             header("Location: ../admin.php?info=" . urlencode("Producto actualizado con exito."));
             exit;
@@ -76,9 +77,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 move_uploaded_file($_FILES['audio']['tmp_name'], '../uploads/demos/' . $audio_nombre);
             }
 
-            $sql = "INSERT INTO productos (titulo, artista, formato, genero, Fecha_Publicacion, precio, precio_oferta, stock, imagen_url, demo_url, descripcion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO productos (titulo, artista, formato, genero, Fecha_Publicacion, precio, precio_oferta, stock, imagen_url, demo_url, descripcion, detalles) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt = $pdo->prepare($sql);
-            $stmt->execute([$titulo, $artista, $formato, $genero, $fecha_publicacion, $precio, $precio_oferta, $stock, $img_nombre, $audio_nombre, $descripcion]);
+            $stmt->execute([$titulo, $artista, $formato, $genero, $fecha_publicacion, $precio, $precio_oferta, $stock, $img_nombre, $audio_nombre, $descripcion, $detalles]);
 
             header("Location: ../admin.php?info=" . urlencode("Producto agregado con exito."));
             exit;

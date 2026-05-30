@@ -32,9 +32,11 @@
                         <div class="contenedor-funda">
                             <span class="etiqueta-nuevo">NUEVO</span>
                             
-                            <div class="contenedor-portada">
-                                <img src="uploads/portadas/<?php echo htmlspecialchars($row['imagen_url']); ?>" alt="Portada de <?php echo htmlspecialchars($row['titulo']); ?>" class="imagen-portada">
-                            </div>
+                            <a href="detalle.php?id=<?php echo $row['id']; ?>" class="enlace-detalle">
+                                <div class="contenedor-portada">
+                                    <img src="uploads/portadas/<?php echo htmlspecialchars($row['imagen_url']); ?>" alt="Portada de <?php echo htmlspecialchars($row['titulo']); ?>" class="imagen-portada">
+                                </div>
+                            </a>
                             
                             <div class="disco-soporte <?php echo $disc_class; ?>">
                                 <div class="etiqueta-disco" style="background-image: url('uploads/portadas/<?php echo htmlspecialchars($row['imagen_url']); ?>'); background-size: cover; background-position: center;">
@@ -44,7 +46,11 @@
                         </div>
 
                         <span class="artista-album"><?php echo htmlspecialchars($row['artista']); ?></span>
-                        <h3 class="titulo-album" title="<?php echo htmlspecialchars($row['titulo']); ?>"><?php echo htmlspecialchars($row['titulo']); ?></h3>
+                        <h3 class="titulo-album" title="<?php echo htmlspecialchars($row['titulo']); ?>">
+                            <a href="detalle.php?id=<?php echo $row['id']; ?>" style="text-decoration: none; color: inherit;">
+                                <?php echo htmlspecialchars($row['titulo']); ?>
+                            </a>
+                        </h3>
                         <div>
                             <span class="insignia-formato"><?php echo $format_label; ?></span>
                         </div>

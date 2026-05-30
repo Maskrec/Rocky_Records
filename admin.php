@@ -312,6 +312,12 @@ if (isset($_GET['editar_id'])) {
                         rows="4"><?php echo $es_edicion ? htmlspecialchars($prod_edit['descripcion'] ?? '') : ''; ?></textarea>
                 </div>
 
+                <div class="form-grupo form-grupo-full">
+                    <label for="detalles">Canciones del album (Una cancion por linea)</label>
+                    <textarea id="detalles" name="detalles" placeholder="Ej:&#10;1. Song One&#10;2. Song Two&#10;3. Song Three"
+                        rows="6"><?php echo $es_edicion ? htmlspecialchars($prod_edit['detalles'] ?? '') : ''; ?></textarea>
+                </div>
+
                 <div class="form-grupo form-grupo-full"
                     style="border-top: 1px solid var(--color-borde); padding-top: 15px; margin-top: 5px;">
                     <label for="imagen">Imagen de portada
