@@ -51,7 +51,7 @@ if (isset($pdo)) {
             if (!empty($colecciones)) {
                 foreach ($colecciones as $col) { 
             ?>
-                    <a href="cds.php?coleccion_id=<?php echo $col['ID']; ?>" class="coleccion-card">
+                    <a href="buscar.php?coleccion_id=<?php echo $col['ID']; ?>" class="coleccion-card">
                         <div class="coleccion-img-wrapper">
                             <img src="<?php echo $col['Portada_Coleccion']; ?>" alt="<?php echo $col['Nombre_Coleccion']; ?>">
                         </div>
@@ -74,7 +74,7 @@ if (isset($pdo)) {
 
                 foreach ($respaldos as $col) {
             ?>
-                    <a href="cds.php?coleccion_id=<?php echo $col['ID']; ?>" class="coleccion-card">
+                    <a href="buscar.php?coleccion_id=<?php echo $col['ID']; ?>" class="coleccion-card">
                         <div class="coleccion-img-wrapper">
                             <img src="<?php echo $col['Portada']; ?>" alt="<?php echo $col['Nombre']; ?>">
                         </div>

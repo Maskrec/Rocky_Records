@@ -5,104 +5,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CD'S - Rocky Records</title>
+    <title>Ofertas Especiales - Rocky Records</title>
     <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
     <?php include 'includes/header.php'; ?>
 
     <main class="contenedor-seccion">
-        <?php
-        $genero_id = isset($_GET['genero_id']) ? (int)$_GET['genero_id'] : 0;
-        $coleccion_id = isset($_GET['coleccion_id']) ? (int)$_GET['coleccion_id'] : 0;
-
-        $titulo_pagina = "Catalogo de CD'S";
-        $query = "SELECT * FROM productos WHERE formato = 'CD'";
-        $params = [];
-
-        if ($genero_id > 0) {
-            $stmt_g = $pdo->prepare("SELECT Nombre_Genero FROM genero_musical WHERE ID = ?");
-            $stmt_g->execute([$genero_id]);
-            $g_res = $stmt_g->fetch();
-            if ($g_res) {
-                $genero_nombre = $g_res['Nombre_Genero'];
-                $titulo_pagina = "CD'S - Género: " . htmlspecialchars($genero_nombre);
-                $query .= " AND (genero LIKE ? OR genero = ?)";
-                $params[] = "%$genero_nombre%";
-                $params[] = $genero_nombre;
-            }
-        } elseif ($coleccion_id > 0) {
-            $stmt_c = $pdo->prepare("SELECT Nombre_Coleccion FROM colecciones WHERE ID = ?");
-            $stmt_c->execute([$coleccion_id]);
-            $c_res = $stmt_c->fetch();
-            $coleccion_nombre = "";
-            if ($c_res) {
-                $coleccion_nombre = $c_res['Nombre_Coleccion'];
-            } else {
-                $respaldos = [
-                    1 => 'Ediciones Limitadas',
-                    2 => 'Los Más Vendidos',
-                    3 => 'Descubrimientos',
-                    4 => 'TOP 5',
-                    5 => 'Clásicos',
-                    6 => 'Poco Conocido'
-                ];
-                if (isset($respaldos[$coleccion_id])) {
-                    $coleccion_nombre = $respaldos[$coleccion_id];
-                }
-            }
-
-            if ($coleccion_nombre !== "") {
-                $titulo_pagina = "CD'S - Colección: " . htmlspecialchars($coleccion_nombre);
-                
-                switch ($coleccion_id) {
-                    case 1:
-                        $query .= " AND stock > 0 AND stock <= 5";
-                        break;
-                    case 2:
-                        $query .= " AND stock > 10";
-                        break;
-                    case 3:
-                        $query .= " AND Fecha_Publicacion >= '2020-01-01'";
-                        break;
-                    case 4:
-                        break;
-                    case 5:
-                        $query .= " AND Fecha_Publicacion < '2010-01-01' AND Fecha_Publicacion > '1900-01-01'";
-                        break;
-                    case 6:
-                        $query .= " AND (stock = 2 OR genero = 'Ruido negro' OR genero = 'jazz')";
-                        break;
-                }
-            }
-        }
-
-        if ($coleccion_id == 4) {
-            $query .= " ORDER BY precio DESC LIMIT 5";
-        } else {
-            $query .= " ORDER BY fecha_agregado DESC";
-        }
-
-        $stmt = $pdo->prepare($query);
-        $stmt->execute($params);
-        $resultados = $stmt->fetchAll();
-        ?>
-
         <div class="cabecera-seccion">
-            <h2><?php echo $titulo_pagina; ?></h2>
+            <h2>Ofertas Especiales</h2>
         </div>
         
         <div class="catalogo">
             <?php
+            $stmt = $pdo->prepare("SELECT * FROM productos WHERE precio_oferta IS NOT NULL AND precio_oferta > 0 ORDER BY (precio - precio_oferta) DESC");
+            $stmt->execute();
+            $resultados = $stmt->fetchAll();
+
             if (count($resultados) > 0) {
                 foreach ($resultados as $row) {
-                    $precio_final = $row['precio_oferta'] ? $row['precio_oferta'] : $row['precio'];
-                    $disc_class = 'cd';
-                    $format_label = 'CD';
-            ?>
+                    $precio_final = $row['precio_oferta'];
+                    $is_cd = ($row['formato'] === 'CD');
+                    $disc_class = $is_cd ? 'cd' : 'vinyl';
+                    $format_label = $is_cd ? 'CD' : 'VINYL'; ?>
                     <div class="tarjeta-producto" id="card-<?php echo $row['id']; ?>">
+                        
                         <div class="contenedor-funda">
-                            <span class="etiqueta-nuevo">NUEVO</span>
+                            <span class="etiqueta-nuevo" style="background-color: #ff3366;">OFERTA</span>
                             
                             <div class="contenedor-portada">
                                 <img src="uploads/portadas/<?php echo htmlspecialchars($row['imagen_url']); ?>" alt="Portada de <?php echo htmlspecialchars($row['titulo']); ?>" class="imagen-portada">
@@ -118,7 +47,7 @@
                         <span class="artista-album"><?php echo htmlspecialchars($row['artista']); ?></span>
                         <h3 class="titulo-album" title="<?php echo htmlspecialchars($row['titulo']); ?>"><?php echo htmlspecialchars($row['titulo']); ?></h3>
                         <div>
-                            <span class="insignia-formato"><?php echo $format_label; ?></span>
+                            <span class="insignia-formato <?php echo !$is_cd ? 'formato-vinilo' : ''; ?>"><?php echo $format_label; ?></span>
                         </div>
 
                         <div class="reproductor">
@@ -128,7 +57,10 @@
                         </div>
 
                         <div class="pie-tarjeta">
-                            <span class="etiqueta-precio">$<?php echo number_format($precio_final, 0); ?> MXN</span>
+                            <div class="precios-oferta" style="display: flex; flex-direction: column; align-items: flex-start; gap: 2px;">
+                                <span class="precio-original" style="text-decoration: line-through; color: #888; font-size: 0.85em;">$<?php echo number_format($row['precio'], 0); ?> MXN</span>
+                                <span class="etiqueta-precio" style="color: #ff3366; font-weight: bold; font-size: 1.1em; margin: 0;">$<?php echo number_format($precio_final, 0); ?> MXN</span>
+                            </div>
                             
                             <form action="actions/agregar_carrito.php" method="POST" style="margin:0;">
                                 <input type="hidden" name="id_producto" value="<?php echo $row['id']; ?>">
@@ -142,7 +74,7 @@
             <?php 
                 }
             } else {
-                echo '<p style="width:100%; text-align:center;">Aun no hay CD\'S disponibles.</p>';
+                echo '<p style="width:100%; text-align:center;">No hay ofertas disponibles en este momento. ¡Vuelve pronto!</p>';
             }
             ?>
         </div>
@@ -150,7 +82,6 @@
 
     <?php include 'includes/footer.php'; ?>
 
-    <!-- SECCION: SCRIPT DE AUDIO REPRODUCTOR -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const reproductores = document.querySelectorAll('.reproductor audio');

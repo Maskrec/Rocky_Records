@@ -12,16 +12,88 @@
     <?php include 'includes/header.php'; ?>
 
     <main class="contenedor-seccion">
+        <?php
+        $genero_id = isset($_GET['genero_id']) ? (int)$_GET['genero_id'] : 0;
+        $coleccion_id = isset($_GET['coleccion_id']) ? (int)$_GET['coleccion_id'] : 0;
+
+        $titulo_pagina = "Catalogo de Viniles";
+        $query = "SELECT * FROM productos WHERE formato = 'Vinil'";
+        $params = [];
+
+        if ($genero_id > 0) {
+            $stmt_g = $pdo->prepare("SELECT Nombre_Genero FROM genero_musical WHERE ID = ?");
+            $stmt_g->execute([$genero_id]);
+            $g_res = $stmt_g->fetch();
+            if ($g_res) {
+                $genero_nombre = $g_res['Nombre_Genero'];
+                $titulo_pagina = "Viniles - Género: " . htmlspecialchars($genero_nombre);
+                $query .= " AND (genero LIKE ? OR genero = ?)";
+                $params[] = "%$genero_nombre%";
+                $params[] = $genero_nombre;
+            }
+        } elseif ($coleccion_id > 0) {
+            $stmt_c = $pdo->prepare("SELECT Nombre_Coleccion FROM colecciones WHERE ID = ?");
+            $stmt_c->execute([$coleccion_id]);
+            $c_res = $stmt_c->fetch();
+            $coleccion_nombre = "";
+            if ($c_res) {
+                $coleccion_nombre = $c_res['Nombre_Coleccion'];
+            } else {
+                $respaldos = [
+                    1 => 'Ediciones Limitadas',
+                    2 => 'Los Más Vendidos',
+                    3 => 'Descubrimientos',
+                    4 => 'TOP 5',
+                    5 => 'Clásicos',
+                    6 => 'Poco Conocido'
+                ];
+                if (isset($respaldos[$coleccion_id])) {
+                    $coleccion_nombre = $respaldos[$coleccion_id];
+                }
+            }
+
+            if ($coleccion_nombre !== "") {
+                $titulo_pagina = "Viniles - Colección: " . htmlspecialchars($coleccion_nombre);
+                
+                switch ($coleccion_id) {
+                    case 1:
+                        $query .= " AND stock > 0 AND stock <= 5";
+                        break;
+                    case 2:
+                        $query .= " AND stock > 10";
+                        break;
+                    case 3:
+                        $query .= " AND Fecha_Publicacion >= '2020-01-01'";
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        $query .= " AND Fecha_Publicacion < '2010-01-01' AND Fecha_Publicacion > '1900-01-01'";
+                        break;
+                    case 6:
+                        $query .= " AND (stock = 2 OR genero = 'Ruido negro' OR genero = 'jazz')";
+                        break;
+                }
+            }
+        }
+
+        if ($coleccion_id == 4) {
+            $query .= " ORDER BY precio DESC LIMIT 5";
+        } else {
+            $query .= " ORDER BY fecha_agregado DESC";
+        }
+
+        $stmt = $pdo->prepare($query);
+        $stmt->execute($params);
+        $resultados = $stmt->fetchAll();
+        ?>
+
         <div class="cabecera-seccion">
-            <h2>Catalogo de Viniles</h2>
+            <h2><?php echo $titulo_pagina; ?></h2>
         </div>
         
         <div class="catalogo">
             <?php
-            $stmt = $pdo->prepare("SELECT * FROM productos WHERE formato = 'Vinil' ORDER BY fecha_agregado DESC");
-            $stmt->execute();
-            $resultados = $stmt->fetchAll();
-
             if (count($resultados) > 0) {
                 foreach ($resultados as $row) {
                     $precio_final = $row['precio_oferta'] ? $row['precio_oferta'] : $row['precio'];
