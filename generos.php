@@ -50,7 +50,7 @@ if (isset($pdo) && $pdo !== null) {
             if (!empty($generos)):
                 foreach ($generos as $genero): 
             ?>
-                    <a href="cds.php?genero_id=<?php echo $genero['ID']; ?>" class="genero-card">
+                    <a href="buscar.php?genero_id=<?php echo $genero['ID']; ?>" class="genero-card">
                         <div class="genero-img-wrapper">
                             <img src="<?php echo $genero['Portada']; ?>" alt="<?php echo $genero['Nombre_Genero']; ?>">
                         </div>

@@ -12,14 +12,30 @@
     <?php include 'includes/header.php'; ?>
 
     <main class="contenedor-seccion">
+        <?php 
+        $q = isset($_GET['q']) ? $_GET['q'] : '';
+        $genero_id = isset($_GET['genero_id']) ? (int)$_GET['genero_id'] : 0;
+        $genero_nombre = '';
+
+        if ($genero_id > 0) {
+            $stmt_g = $pdo->prepare("SELECT Nombre_Genero FROM genero_musical WHERE ID = ?");
+            $stmt_g->execute([$genero_id]);
+            $g_res = $stmt_g->fetch();
+            if ($g_res) {
+                $genero_nombre = $g_res['Nombre_Genero'];
+            }
+        }
+        ?>
+
         <div class="cabecera-seccion">
             <h2>
                 <?php 
-                $q = isset($_GET['q']) ? $_GET['q'] : '';
-                if ($q !== '') {
-                    echo 'Resultados de busqueda para: "' . htmlspecialchars($q) . '"';
+                if ($genero_nombre !== '') {
+                    echo 'Género: ' . htmlspecialchars($genero_nombre);
+                } elseif ($q !== '') {
+                    echo 'Resultados de búsqueda para: "' . htmlspecialchars($q) . '"';
                 } else {
-                    echo 'Busqueda';
+                    echo 'Búsqueda';
                 }
                 ?>
             </h2>
@@ -27,11 +43,17 @@
         
         <div class="catalogo">
             <?php
-            if ($q !== '') {
-                $stmt = $pdo->prepare("SELECT * FROM productos WHERE titulo LIKE ? OR artista LIKE ? OR genero LIKE ? ORDER BY fecha_agregado DESC");
-                $like_q = "%$q%";
-                $stmt->execute([$like_q, $like_q, $like_q]);
-                $resultados = $stmt->fetchAll();
+            if ($genero_nombre !== '' || $q !== '') {
+                if ($genero_nombre !== '') {
+                    $stmt = $pdo->prepare("SELECT * FROM productos WHERE genero LIKE ? OR genero = ? ORDER BY fecha_agregado DESC");
+                    $stmt->execute(["%$genero_nombre%", $genero_nombre]);
+                    $resultados = $stmt->fetchAll();
+                } else {
+                    $stmt = $pdo->prepare("SELECT * FROM productos WHERE titulo LIKE ? OR artista LIKE ? OR genero LIKE ? ORDER BY fecha_agregado DESC");
+                    $like_q = "%$q%";
+                    $stmt->execute([$like_q, $like_q, $like_q]);
+                    $resultados = $stmt->fetchAll();
+                }
 
                 if (count($resultados) > 0) {
                     foreach ($resultados as $row) {

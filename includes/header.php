@@ -42,7 +42,7 @@ if (isset($pdo)) {
             <a href="viniles.php" class="enlace-navegacion <?php echo ($current_page == 'viniles.php') ? 'activo' : ''; ?>">VINILES</a>
             <a href="cds.php" class="enlace-navegacion <?php echo ($current_page == 'cds.php') ? 'activo' : ''; ?>">CD'S</a>
             <a href="generos.php" class="enlace-navegacion <?php echo ($current_page == 'generos.php') ? 'activo' : ''; ?>">GENEROS</a>
-            <a href="index.php#ofertas" class="enlace-navegacion">OFERTAS</a>
+            <a href="ofertas.php" class="enlace-navegacion <?php echo ($current_page == 'ofertas.php') ? 'activo' : ''; ?>">OFERTAS</a>
             <a href="colecciones.php" class="enlace-navegacion <?php echo ($current_page == 'colecciones.php') ? 'activo' : ''; ?>">COLECCIONES</a>
         </nav>
         

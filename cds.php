@@ -12,14 +12,78 @@
     <?php include 'includes/header.php'; ?>
 
     <main class="contenedor-seccion">
+        <?php
+        $genero_nombre = '';
+        if (isset($_GET['genero_id'])) {
+            $g_id = (int)$_GET['genero_id'];
+            $stmt_g = $pdo->prepare("SELECT Nombre_Genero FROM genero_musical WHERE ID = ?");
+            $stmt_g->execute([$g_id]);
+            $g_res = $stmt_g->fetch();
+            if ($g_res) {
+                $genero_nombre = $g_res['Nombre_Genero'];
+            }
+        }
+
+        $col_nombre = '';
+        if (isset($_GET['coleccion_id'])) {
+            $c_id = (int)$_GET['coleccion_id'];
+            $stmt_c = $pdo->prepare("SELECT Nombre_Coleccion FROM colecciones WHERE ID = ?");
+            $stmt_c->execute([$c_id]);
+            $c_res = $stmt_c->fetch();
+            if ($c_res) {
+                $col_nombre = $c_res['Nombre_Coleccion'];
+            }
+        }
+        ?>
+
         <div class="cabecera-seccion">
-            <h2>Catalogo de CD'S</h2>
+            <h2>
+                <?php
+                if ($genero_nombre !== '') {
+                    echo "CD's de " . htmlspecialchars($genero_nombre);
+                } elseif ($col_nombre !== '') {
+                    echo "CD's: " . htmlspecialchars($col_nombre);
+                } else {
+                    echo "Catalogo de CD'S";
+                }
+                ?>
+            </h2>
         </div>
         
         <div class="catalogo">
             <?php
-            $stmt = $pdo->prepare("SELECT * FROM productos WHERE formato = 'CD' ORDER BY fecha_agregado DESC");
-            $stmt->execute();
+            // Determinar la consulta según los filtros de género o colección
+            if ($genero_nombre !== '') {
+                $stmt = $pdo->prepare("SELECT * FROM productos WHERE formato = 'CD' AND (genero LIKE ? OR genero = ?) ORDER BY fecha_agregado DESC");
+                $stmt->execute(["%$genero_nombre%", $genero_nombre]);
+            } elseif (isset($_GET['coleccion_id'])) {
+                $c_id = (int)$_GET['coleccion_id'];
+                if ($c_id === 1) {
+                    // Ediciones Limitadas: stock bajo (1 a 5 unidades)
+                    $stmt = $pdo->prepare("SELECT * FROM productos WHERE formato = 'CD' AND stock > 0 AND stock <= 5 ORDER BY fecha_agregado DESC");
+                } elseif ($c_id === 2) {
+                    // Los Más Vendidos: stock alto o más de 10 unidades
+                    $stmt = $pdo->prepare("SELECT * FROM productos WHERE formato = 'CD' AND stock > 10 ORDER BY fecha_agregado DESC");
+                } elseif ($c_id === 3) {
+                    // Descubrimientos: fecha de publicación reciente (desde 2020)
+                    $stmt = $pdo->prepare("SELECT * FROM productos WHERE formato = 'CD' AND Fecha_Publicacion >= '2020-01-01' ORDER BY fecha_agregado DESC");
+                } elseif ($c_id === 4) {
+                    // TOP 5: los 5 más caros
+                    $stmt = $pdo->prepare("SELECT * FROM productos WHERE formato = 'CD' ORDER BY precio DESC LIMIT 5");
+                } elseif ($c_id === 5) {
+                    // Clásicos: fecha de publicación anterior a 2010
+                    $stmt = $pdo->prepare("SELECT * FROM productos WHERE formato = 'CD' AND Fecha_Publicacion < '2010-01-01' AND Fecha_Publicacion > '1900-01-01' ORDER BY fecha_agregado DESC");
+                } elseif ($c_id === 6) {
+                    // Poco Conocido: stock igual a 2 o géneros alternativos
+                    $stmt = $pdo->prepare("SELECT * FROM productos WHERE formato = 'CD' AND (stock = 2 OR genero = 'Ruido negro' OR genero = 'jazz') ORDER BY fecha_agregado DESC");
+                } else {
+                    $stmt = $pdo->prepare("SELECT * FROM productos WHERE formato = 'CD' ORDER BY fecha_agregado DESC");
+                }
+                $stmt->execute();
+            } else {
+                $stmt = $pdo->prepare("SELECT * FROM productos WHERE formato = 'CD' ORDER BY fecha_agregado DESC");
+                $stmt->execute();
+            }
             $resultados = $stmt->fetchAll();
 
             if (count($resultados) > 0) {
